@@ -7,7 +7,7 @@ const translations = {
   EN: {
     location: 'Udupi, Karnataka',
     heroTitle: 'MalligeMitra',
-    heroDesc: 'Empowering Udupi Mallige farmers through labor support, a virtual marketplace, direct market access',
+    heroDesc: 'Empowering Udupi Mallige farmers through labor support, a virtual marketplace, direct market access and more',
     login: 'Login',
     signup: 'Sign Up',
     aboutTitle: 'Why MalligeMitra?',

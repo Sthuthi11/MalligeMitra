@@ -78,8 +78,9 @@ export default function Home() {
           <img
             src="/herobg.jpg"
             alt="Jasmine Field Background"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover select-none"
             style={{ filter: 'brightness(0.45) saturate(1.1)' }}
+            draggable={false}
           />
           {/* If you have a jasmine field video, replace the <img> above with a <video> and similar dark overlay */}
         </div>
@@ -91,7 +92,8 @@ export default function Home() {
             <img
               src="/icon.jpg"
               alt="MalligeMitra Logo"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover select-none"
+              draggable={false}
             />
           </div>
           <h1 className={`font-extrabold text-white drop-shadow-xl mb-4 tracking-tight leading-tight ${lang === 'KN' ? 'text-4xl md:text-5xl' : 'text-5xl md:text-7xl'}`}>{t.heroTitle}</h1>
@@ -133,7 +135,8 @@ export default function Home() {
             alt="Jasmine Farming"
             width={600}
             height={400}
-            className="rounded-xl shadow-2xl border-4 border-lime-200"
+            className="rounded-xl shadow-2xl border-4 border-lime-200 select-none"
+            draggable={false}
           />
         </div>
       </section>

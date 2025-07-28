@@ -50,7 +50,7 @@ const translations = {
     contact: 'ಸಂಪರ್ಕಿಸಿ',
     copyright: 'ಎಲ್ಲ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.',
     built: 'ಇದನ್ನು ನಿರ್ಮಿಸಲಾಗಿದೆ',
-    by: 'ಲಿಯಾಂ ಕಾರ್ಟರ್ ಅವರಿಂದ.'
+    by: 'ಟೀಮ್ ರಿಜೆನೆಸಿಸ್ ಅವರಿಂದ.'
   }
 };
 
@@ -68,7 +68,6 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1"><select className="bg-emerald-900 text-white border-none outline-none" value={lang} onChange={e => setLang(e.target.value as Lang)}><option value="EN">English</option><option value="KN">Kannada</option></select></span>
-          // ...existing code...
         </div>
       </div>
       {/* Hero with video background */}

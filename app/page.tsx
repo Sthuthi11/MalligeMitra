@@ -166,6 +166,7 @@ export default function Home() {
           <a href="/faqs" className="hover:underline hover:text-lime-200 transition-colors">{t.faqs}</a>
           <a href="/terms" className="hover:underline hover:text-lime-200 transition-colors">{t.terms}</a>
           <a href="/privacy" className="hover:underline hover:text-lime-200 transition-colors">{t.privacy}</a>
+          <a href="/about" className="hover:underline hover:text-lime-200 transition-colors">About Us</a>
           <a href="/contact" className="hover:underline hover:text-lime-200 transition-colors">{t.contact}</a>
         </div>
         <p className="text-sm">{t.built} <span className="text-pink-300">❤️</span> {t.by}</p>

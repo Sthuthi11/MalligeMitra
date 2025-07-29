@@ -157,7 +157,7 @@ export default function PrivacyPage() {
       </main>
       <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
         <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
-        <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regen.</p>
+        <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
       </footer>
     </div>
   );

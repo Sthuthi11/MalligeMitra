@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Question } from '../../../types/forum'; // Adjust path
+import { Question } from '../../../types/forum';
 import { v4 as uuidv4 } from 'uuid';
 import { readForumData, writeForumData } from '../../../lib/forum-data'; // Import the new utility functions
 

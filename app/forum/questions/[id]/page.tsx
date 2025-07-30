@@ -1,10 +1,9 @@
-// my-farmer-forum/app/forum/questions/[id]/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Question, Answer, NewAnswerFormData } from '../../../../types/forum'; // Import forum-specific types
-import { User } from '../../../../types'; // Import User from your main shared types
+import { User } from '../../../../types';
 import Link from 'next/link';
 import { isAuthenticated, getCurrentUser, mockLogin, mockLogout, mockUsers } from '../../../../lib/auth-mock'; // Import from centralized mock auth
 

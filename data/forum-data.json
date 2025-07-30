@@ -1,0 +1,32 @@
+{
+  "questions": [
+    {
+      "id": "1c47e413-01d0-43ce-a90c-cee5053a8c50",
+      "title": "How to keep the jasmine fresh during transport?",
+      "content": "Any tips?",
+      "authorId": "farmer-user-123",
+      "authorUsername": "Mahesh K",
+      "createdAt": "2025-07-30T05:33:19.848Z",
+      "answersCount": 0
+    },
+    {
+      "id": "7cb68545-32c6-4658-a863-668b336338a3",
+      "title": "Anyone exporting Mallige to the Gulf or major cities?",
+      "content": "Share contact pls",
+      "authorId": "farmer-user-123",
+      "authorUsername": "Mahesh K",
+      "createdAt": "2025-07-30T05:35:34.706Z",
+      "answersCount": 1
+    }
+  ],
+  "answers": [
+    {
+      "id": "6068168f-ff3f-4146-8778-29b4d9bfec49",
+      "questionId": "7cb68545-32c6-4658-a863-668b336338a3",
+      "content": "It would be helpful...",
+      "authorId": "farmer-user-123",
+      "authorUsername": "Mahesh K",
+      "createdAt": "2025-07-30T05:36:22.402Z"
+    }
+  ]
+}

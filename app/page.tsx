@@ -24,6 +24,7 @@ const translations = {
     terms: 'Terms of Use',
     privacy: 'Privacy Policy',
     contact: 'Contact',
+    aboutUs: 'About Us',
     copyright: 'All rights reserved.',
     built: 'Built with',
     by: 'by Team Regenesis'
@@ -48,6 +49,7 @@ const translations = {
     terms: 'ಬಳಕೆ ನಿಯಮಗಳು',
     privacy: 'ಗೌಪ್ಯತಾ ನೀತಿ',
     contact: 'ಸಂಪರ್ಕಿಸಿ',
+    aboutUs: 'ನಮ್ಮ ಬಗ್ಗೆ',
     copyright: 'ಎಲ್ಲ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.',
     built: 'ಇದನ್ನು ನಿರ್ಮಿಸಲಾಗಿದೆ',
     by: 'ಟೀಮ್ ರಿಜೆನೆಸಿಸ್ ಅವರಿಂದ.'
@@ -175,7 +177,7 @@ export default function Home() {
           <a href="/faqs" className="hover:underline hover:text-lime-200 transition-colors">{t.faqs}</a>
           <a href="/terms" className="hover:underline hover:text-lime-200 transition-colors">{t.terms}</a>
           <a href="/privacy" className="hover:underline hover:text-lime-200 transition-colors">{t.privacy}</a>
-          <a href="/about" className="hover:underline hover:text-lime-200 transition-colors">About Us</a>
+          <a href="/about" className="hover:underline hover:text-lime-200 transition-colors">{t.aboutUs}</a>
           <a href="/contact" className="hover:underline hover:text-lime-200 transition-colors">{t.contact}</a>
         </div>
         <p className="text-sm">{t.built} <span className="text-pink-300">❤️</span> {t.by}</p>

@@ -2,17 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Question } from '../../types/forum'; // Import forum-specific types
+import { Question } from '../../types/forum';
 import { User } from '../../types';
-import { getCurrentUser, mockLogin, mockLogout, mockUsers, isAuthenticated } from '../../lib/auth-mock'; // Import from centralized mock auth
+import { getCurrentUser, mockLogin, mockLogout, mockUsers, isAuthenticated } from '../../lib/auth-mock';
 import { useRouter } from 'next/navigation';
 
 // --- Language Translations for this page ---
 const translations = {
     EN: {
         backToHome: "Back to Home",
-        english: "English",
-        kannada: "ಕನ್ನಡ",
         allRightsReserved: "© 2025 MalligeMitra. All rights reserved.",
         builtWith: "Built with",
         byTeamRegenesis: "by Team Regenesis.",
@@ -33,8 +31,6 @@ const translations = {
     },
     KN: {
         backToHome: "ಹೋಮ್‌ಗೆ ಹಿಂತಿರುಗಿ",
-        english: "English",
-        kannada: "ಕನ್ನಡ",
         allRightsReserved: "© 2025 ಮಲ್ಲಿಗೆಮಿತ್ರ. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
         builtWith: "ಇದನ್ನು ನಿರ್ಮಿಸಲಾಗಿದೆ",
         byTeamRegenesis: "ಟೀಮ್ ರಿಜೆನೆಸಿಸ್ ಅವರಿಂದ.",
@@ -57,8 +53,7 @@ const translations = {
 // --- End: Language Translations for this page ---
 
 export default function ForumPage() {
-    const [lang, setLang] = useState<"EN" | "KN">("EN");
-    const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+    const [lang] = useState<"EN" | "KN">("EN");
     const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
     const t = translations[lang];
 
@@ -66,21 +61,17 @@ export default function ForumPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Current logged-in user state, directly managed here using mock functions
     const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
     const router = useRouter();
 
-    // Initialize and update loggedInUser state
     useEffect(() => {
         setLoggedInUser(getCurrentUser());
-        // No subscription needed if we refetch data on `loggedInUser` change or page load
-    }, []); // Only run once on mount
+    }, []);
 
-    // Fetch questions when component mounts or loggedInUser changes
     useEffect(() => {
         if (!isAuthenticated()) {
             setLoading(false);
-            setQuestions([]); // Clear questions if not authenticated
+            setQuestions([]);
             return;
         }
 
@@ -99,28 +90,28 @@ export default function ForumPage() {
             }
         }
         fetchQuestions();
-    }, [loggedInUser]); // Re-fetch when loggedInUser changes
+    }, [loggedInUser]);
 
     const handleMockLogin = (user: User) => {
         mockLogin(user);
-        setLoggedInUser(user); // Update local state
+        setLoggedInUser(user);
         setProfileDropdownOpen(false);
-        router.refresh(); // Force a refresh to re-evaluate auth status and fetch data
+        router.refresh();
     };
 
     const handleLogout = () => {
         mockLogout();
-        setLoggedInUser(null); // Update local state
+        setLoggedInUser(null);
         setProfileDropdownOpen(false);
-        router.refresh(); // Force a refresh
+        router.refresh();
     };
 
     // Render the access denied page if not authenticated
     if (!isAuthenticated()) {
         return (
             <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 to-lime-100">
-                {/* Header - Copied from marketplace/page.tsx pattern */}
-                <header className="flex items-center justify-between px-8 py-4 bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white shadow-md">
+                {/* Header */}
+                <header className="flex items-center justify-between px-8 py-4" style={{ backgroundColor: "#047857" }}>
                     <div className="flex items-center gap-4">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
@@ -128,138 +119,6 @@ export default function ForumPage() {
                             </svg>
                             {t.backToHome}
                         </Link>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <button
-                                className="px-3 py-1 rounded bg-white text-emerald-700 flex items-center gap-2"
-                                onClick={() => setLangDropdownOpen((open) => !open)}
-                                type="button"
-                            >
-                                <span>{lang === "EN" ? t.english : t.kannada}</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            {langDropdownOpen && (
-                                <div className="absolute right-0 mt-2 w-32 bg-white text-emerald-700 rounded shadow-lg z-10">
-                                    <button
-                                        className={`block w-full text-left px-4 py-2 hover:bg-emerald-100 ${lang === "EN" ? "font-bold" : ""}`}
-                                        onClick={() => { setLang("EN"); setLangDropdownOpen(false); }}
-                                    >{t.english}</button>
-                                    <button
-                                        className={`block w-full text-left px-4 py-2 hover:bg-emerald-100 ${lang === "KN" ? "font-bold" : ""}`}
-                                        onClick={() => { setLang("KN"); setLangDropdownOpen(false); }}
-                                    >{t.kannada}</button>
-                                </div>
-                            )}
-                        </div>
-                        <div className="relative">
-                            <button
-                                className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-800 hover:bg-emerald-900"
-                                aria-label="Profile"
-                                type="button"
-                                onClick={() => setProfileDropdownOpen((open) => !open)}
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="white" className="w-7 h-7">
-                                    <circle cx="12" cy="8" r="4" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 20c0-3.333 5.333-5 8-5s8 1.667 8 5" />
-                                </svg>
-                            </button>
-                            {profileDropdownOpen && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white text-emerald-700 rounded shadow-lg z-10">
-                                    {loggedInUser ? (
-                                        <>
-                                            <div className="px-4 py-2 text-sm text-gray-800 font-semibold border-b border-gray-200">
-                                                Logged in as: {loggedInUser.username}
-                                            </div>
-                                            {/* Add actual links for my orders/profile if they exist */}
-                                            <button
-                                                className="block w-full text-left px-4 py-2 hover:bg-emerald-100 text-red-600"
-                                                onClick={handleLogout}
-                                            >
-                                                {t.logout}
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="px-4 py-2 text-sm text-gray-800 font-semibold border-b border-gray-200">
-                                                {t.loginAs}
-                                            </div>
-                                            {mockUsers.map(user => (
-                                                <button
-                                                    key={user.id}
-                                                    className="block w-full text-left px-4 py-2 hover:bg-emerald-100"
-                                                    onClick={() => handleMockLogin(user)}
-                                                >
-                                                    {user.username}
-                                                </button>
-                                            ))}
-                                        </>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </header>
-
-                <main className="flex-1 container mx-auto p-8 text-center bg-white shadow-lg rounded-lg mt-10">
-                    <h1 className="text-3xl font-bold text-red-700 mb-4">{t.accessDenied}</h1>
-                    <p className="text-lg text-gray-700 mb-6">{t.loginPrompt}</p>
-                    <button
-                        onClick={() => handleMockLogin(mockUsers[0] || { id: 'default', username: 'DefaultUser' })} // Login as first mock user
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md"
-                    >
-                        {t.simulateLogin}
-                    </button>
-                </main>
-
-                {/* Footer - Copied from marketplace/page.tsx pattern */}
-                <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
-                    <p className="mb-1 text-base font-semibold">{t.allRightsReserved}</p>
-                    <p className="text-xs">{t.builtWith} <span className="text-pink-300">❤️</span> {t.byTeamRegenesis}</p>
-                </footer>
-            </div>
-        );
-    }
-
-    // Render the actual forum content if authenticated
-    return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 to-lime-100">
-            {/* Header - Copied from marketplace/page.tsx pattern */}
-            <header className="flex items-center justify-between px-8 py-4 bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white shadow-md">
-                <div className="flex items-center gap-4">
-                    <Link href="/" className="flex items-center gap-2 text-lg font-semibold hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                        </svg>
-                        {t.backToHome}
-                    </Link>
-                </div>
-                <div className="flex items-center gap-4">
-                    <div className="relative">
-                        <button
-                            className="px-3 py-1 rounded bg-white text-emerald-700 flex items-center gap-2"
-                            onClick={() => setLangDropdownOpen((open) => !open)}
-                            type="button"
-                        >
-                            <span>{lang === "EN" ? t.english : t.kannada}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        {langDropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-32 bg-white text-emerald-700 rounded shadow-lg z-10">
-                                <button
-                                    className={`block w-full text-left px-4 py-2 hover:bg-emerald-100 ${lang === "EN" ? "font-bold" : ""}`}
-                                    onClick={() => { setLang("EN"); setLangDropdownOpen(false); }}
-                                >{t.english}</button>
-                                <button
-                                    className={`block w-full text-left px-4 py-2 hover:bg-emerald-100 ${lang === "KN" ? "font-bold" : ""}`}
-                                    onClick={() => { setLang("KN"); setLangDropdownOpen(false); }}
-                                >{t.kannada}</button>
-                            </div>
-                        )}
                     </div>
                     <div className="relative">
                         <button
@@ -280,7 +139,6 @@ export default function ForumPage() {
                                         <div className="px-4 py-2 text-sm text-gray-800 font-semibold border-b border-gray-200">
                                             Logged in as: {loggedInUser.username}
                                         </div>
-                                        {/* Add actual links for my orders/profile if they exist */}
                                         <button
                                             className="block w-full text-left px-4 py-2 hover:bg-emerald-100 text-red-600"
                                             onClick={handleLogout}
@@ -307,6 +165,85 @@ export default function ForumPage() {
                             </div>
                         )}
                     </div>
+                </header>
+
+                <main className="flex-1 container mx-auto p-8 text-center bg-white shadow-lg rounded-lg mt-10">
+                    <h1 className="text-3xl font-bold text-red-700 mb-4">{t.accessDenied}</h1>
+                    <p className="text-lg text-gray-700 mb-6">{t.loginPrompt}</p>
+                    <button
+                        onClick={() => handleMockLogin(mockUsers[0] || { id: 'default', username: 'DefaultUser' })}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md"
+                    >
+                        {t.simulateLogin}
+                    </button>
+                </main>
+
+                {/* Footer */}
+                <footer className="text-white py-3 text-center shadow-inner mt-auto" style={{ backgroundColor: "#047857" }}>
+                    <p className="mb-1 text-base font-semibold">{t.allRightsReserved}</p>
+                    <p className="text-xs">{t.builtWith} <span className="text-pink-300">❤️</span> {t.byTeamRegenesis}</p>
+                </footer>
+            </div>
+        );
+    }
+
+    // Render the actual forum content if authenticated
+    return (
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 to-lime-100">
+            {/* Header */}
+            <header className="flex items-center justify-between px-8 py-4" style={{ backgroundColor: "#047857" }}>
+                <div className="flex items-center gap-4">
+                    <Link href="/" className="flex items-center gap-2 text-lg font-semibold hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        {t.backToHome}
+                    </Link>
+                </div>
+                <div className="relative">
+                    <button
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-800 hover:bg-emerald-900"
+                        aria-label="Profile"
+                        type="button"
+                        onClick={() => setProfileDropdownOpen((open) => !open)}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="white" className="w-7 h-7">
+                            <circle cx="12" cy="8" r="4" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 20c0-3.333 5.333-5 8-5s8 1.667 8 5" />
+                        </svg>
+                    </button>
+                    {profileDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white text-emerald-700 rounded shadow-lg z-10">
+                            {loggedInUser ? (
+                                <>
+                                    <div className="px-4 py-2 text-sm text-gray-800 font-semibold border-b border-gray-200">
+                                        Logged in as: {loggedInUser.username}
+                                    </div>
+                                    <button
+                                        className="block w-full text-left px-4 py-2 hover:bg-emerald-100 text-red-600"
+                                        onClick={handleLogout}
+                                    >
+                                        {t.logout}
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="px-4 py-2 text-sm text-gray-800 font-semibold border-b border-gray-200">
+                                        {t.loginAs}
+                                    </div>
+                                    {mockUsers.map(user => (
+                                        <button
+                                            key={user.id}
+                                            className="block w-full text-left px-4 py-2 hover:bg-emerald-100"
+                                            onClick={() => handleMockLogin(user)}
+                                        >
+                                            {user.username}
+                                        </button>
+                                    ))}
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
             </header>
 
@@ -351,8 +288,8 @@ export default function ForumPage() {
                 </div>
             </main>
 
-            {/* Footer - Copied from marketplace/page.tsx pattern */}
-            <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
+            {/* Footer */}
+            <footer className="text-white py-3 text-center shadow-inner mt-auto" style={{ backgroundColor: "#047857" }}>
                 <p className="mb-1 text-base font-semibold">{t.allRightsReserved}</p>
                 <p className="text-xs">{t.builtWith} <span className="text-pink-300">❤️</span> {t.byTeamRegenesis}</p>
             </footer>

@@ -1,5 +1,6 @@
-
 "use client";
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
+
 import { useState } from "react";
 import { FaUserCog, FaClipboardList, FaChalkboardTeacher, FaStore, FaTasks } from "react-icons/fa";
 
@@ -82,14 +83,7 @@ export default function LaborerDashboard() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <select
-              className="bg-white text-emerald-700 rounded px-2 py-1 text-xs font-semibold shadow focus:outline-none"
-              value={lang}
-              onChange={e => setLang(e.target.value as LangKey)}
-            >
-              <option value="en">English</option>
-              <option value="kn">Kannada</option>
-            </select>
+            <GoogleTranslateWidgetBlended />
             <button
               className="h-10 w-10 flex items-center justify-center rounded-full bg-white border-2 border-white shadow cursor-pointer"
               onClick={() => setProfileOpen((open) => !open)}

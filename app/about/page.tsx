@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 
 type TeamMember = {
   name: string;
@@ -37,18 +38,21 @@ const team: TeamMember[] = [
 
 const AboutUs: React.FC = () => {
   return (
-    <>
-      {/* Header */}
-      <header className="app-header shadow-sm py-4 px-6 md:px-10 flex justify-between items-center" style={{ backgroundColor: "#047857" }}>
-        <div className="text-2xl font-bold text-white title-font">MalligeMitra</div>
-        <nav className="flex items-center space-x-4">
-          <a href="/" className="text-white hover:text-green-200 px-3 py-2 rounded-md transition-colors duration-200">
-            Home
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-lime-50 to-emerald-100">
+      {/* Header (copied from Contact Us) */}
+      <header className="flex items-center justify-between px-8 py-4 text-white shadow-md" style={{ backgroundColor: "#047857" }}>
+        <div className="flex items-center gap-4">
+          <a href="/" className="flex items-center gap-2 text-lg font-semibold hover:underline">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Home
           </a>
-        </nav>
+        </div>
+        <GoogleTranslateWidgetBlended />
       </header>
 
-      <section className="bg-gradient-to-b from-lime-50 to-emerald-100 py-12 px-6" id="about">
+      <section className="py-12 px-6" id="about">
         <div className="max-w-6xl mx-auto">
           {/* Section Heading */}
           <div className="text-center mb-12">
@@ -99,7 +103,7 @@ const AboutUs: React.FC = () => {
         <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
         <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
       </footer>
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 
 const translations = {
   EN: {
@@ -58,8 +59,8 @@ const translations = {
   }
 };
 
+
 export default function FAQPage() {
-  // Default to English, remove language switcher
   const t = translations["EN"];
 
   return (
@@ -74,7 +75,7 @@ export default function FAQPage() {
             Back to Home
           </a>
         </div>
-        {/* Language switcher removed */}
+        <GoogleTranslateWidgetBlended />
       </header>
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center justify-start px-8 py-8 gap-8">
@@ -95,7 +96,7 @@ export default function FAQPage() {
       <footer className="text-white py-3 text-center shadow-inner mt-auto" style={{ backgroundColor: "#047857" }}>
         <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
         <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
-        </footer>
-        </div>
+      </footer>
+    </div>
   );
 }

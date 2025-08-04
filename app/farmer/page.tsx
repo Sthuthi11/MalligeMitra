@@ -1,54 +1,9 @@
 "use client";
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 import { useState, useEffect } from "react"; // Step 3: Added 'useEffect' here
 import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory } from "react-icons/fa";
 
-// Text translations remain the same
-const TEXT = {
-  en: {
-    dashboard: "Farmer Dashboard",
-    welcome: "Welcome, Farmer!",
-    sellFlowers: "Sell Flowers",
-    sellFlowersDesc: "List your jasmine flowers for sale, set price and quantity.",
-    hireLaborers: "Hire Laborers",
-    hireLaborersDesc: "Find, request, and manage skilled labor for your farm.",
-    shareItems: "Share/Sell Excess Items",
-    shareItemsDesc: "List extra tools, rope, or supplies to share or sell.",
-    marketplace: "Marketplace & Orders",
-    marketplaceDesc: "View your orders and explore the virtual marketplace.",
-    forum: "Farmer Forum",
-    forumDesc: "Discuss, share advice, and connect with other farmers.",
-    historicalPrices: "Historical Prices",
-    historicalPricesDesc: "View jasmine flower prices from previous seasons.",
-    priceCalculator: "Price Calculator",
-    priceCalculatorDesc: "Estimate your flower price based on quantity and market trends.",
-    copyright: "© 2025 MalligeMitra. All rights reserved.",
-    built: "Built with ",
-    by: "by Team Regenesis"
-  },
-  kn: {
-    dashboard: "ರೈತ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
-    welcome: "ಸ್ವಾಗತ ರೈತರೆ!",
-    sellFlowers: "ಹೂವುಗಳನ್ನು ಮಾರಾಟ ಮಾಡಿ",
-    sellFlowersDesc: "ನಿಮ್ಮ ಮಲ್ಲಿಗೆ ಹೂಗಳನ್ನು ಮಾರಾಟಕ್ಕೆ ಪಟ್ಟಿ ಮಾಡಿ, ಬೆಲೆ ಮತ್ತು ಪ್ರಮಾಣವನ್ನು ಹೊಂದಿಸಿ.",
-    hireLaborers: "ಕಾರ್ಮಿಕರನ್ನು ನೇಮಿಸಿ",
-    hireLaborersDesc: "ನಿಮ್ಮ ಕೃಷಿಗೆ ನಿಪುಣ ಕಾರ್ಮಿಕರನ್ನು ಹುಡುಕಿ ಮತ್ತು ನಿರ್ವಹಿಸಿ.",
-    shareItems: "ಹಂಚಿಕೆ/ಮಾರಾಟ ಹೆಚ್ಚುವರಿ ವಸ್ತುಗಳು",
-    shareItemsDesc: "ಹೆಚ್ಚುವರಿ ಉಪಕರಣಗಳು, ಕಯಿ, ಅಥವಾ ಸರಕಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ ಅಥವಾ ಮಾರಾಟ ಮಾಡಿ.",
-    marketplace: "ಮಾರ್ಕೆಟ್ & ಆರ್ಡರ್‍ಗಳು",
-    marketplaceDesc: "ನಿಮ್ಮ ಆರ್ಡರ್‍ಗಳನ್ನು ನೋಡಿ ಮತ್ತು ವರ್ಚುವಲ್ ಮಾರ್ಕೆಟ್ ಅನ್ವೇಷಿಸಿ.",
-    forum: "ರೈತ ಫೋರಮ್",
-    forumDesc: "ಚರ್ಚಿಸಿ, ಸಲಹೆ ಹಂಚಿಕೊಳ್ಳಿ, ಮತ್ತು ಇತರ ರೈತರೊಂದಿಗೆ ಸಂಪರ್ಕ ಸಾಧಿಸಿ.",
-    historicalPrices: "ಐತಿಹಾಸಿಕ ಬೆಲೆಗಳು",
-    historicalPricesDesc: "ಹಿಂದಿನ ಋತುಗಳಲ್ಲಿ ಮಲ್ಲಿಗೆ ಹೂವಿನ ಬೆಲೆಗಳನ್ನು ನೋಡಿ.",
-    priceCalculator: "ಬೆಲೆ ಗಣಕಯಂತ್ರ",
-    priceCalculatorDesc: "ಪ್ರಮಾಣ ಮತ್ತು ಮಾರುಕಟ್ಟೆ ಪ್ರವೃತ್ತಿಗಳ ಆಧಾರದ ಮೇಲೆ ನಿಮ್ಮ ಹೂವಿನ ಬೆಲೆಯನ್ನು ಅಂದಾಜಿಸಿ.",
-    copyright: "© 2025 MalligeMitra. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
-    built: "ನಿರ್ಮಿಸಲಾಗಿದೆ ",
-    by: "Team Regenesis"
-  }
-} as const;
 
-type LangKey = keyof typeof TEXT;
 
 
 // =============================================================
@@ -155,20 +110,20 @@ const PriceCalculator = ({ t }: { t: any }) => {
 
 
 // This is your main FarmerDashboard component
+
 export default function FarmerDashboard() {
-  const [lang, setLang] = useState<LangKey>("en");
   const [profileOpen, setProfileOpen] = useState(false);
   const [active, setActive] = useState("dashboard");
-  const t = TEXT[lang];
+  // Labels are now static English, since Google Translate widget handles translation
   const navItems = [
-    { key: "dashboard", label: t.dashboard, icon: <FaLeaf /> },
-    { key: "priceCalculator", label: t.priceCalculator, icon: <FaCalculator /> },
-    { key: "sellFlowers", label: t.sellFlowers, icon: <FaLeaf /> },
-    { key: "hireLaborers", label: t.hireLaborers, icon: <FaUsers /> },
-    { key: "shareItems", label: t.shareItems, icon: <FaBoxOpen /> },
-    { key: "marketplace", label: t.marketplace, icon: <FaStore /> },
-    { key: "forum", label: t.forum, icon: <FaComments /> },
-    { key: "historicalPrices", label: t.historicalPrices, icon: <FaHistory /> },
+    { key: "dashboard", label: "Farmer Dashboard", icon: <FaLeaf /> },
+    { key: "priceCalculator", label: "Price Calculator", icon: <FaCalculator /> },
+    { key: "sellFlowers", label: "Sell Flowers", icon: <FaLeaf /> },
+    { key: "hireLaborers", label: "Hire Laborers", icon: <FaUsers /> },
+    { key: "shareItems", label: "Share/Sell Excess Items", icon: <FaBoxOpen /> },
+    { key: "marketplace", label: "Marketplace & Orders", icon: <FaStore /> },
+    { key: "forum", label: "Farmer Forum", icon: <FaComments /> },
+    { key: "historicalPrices", label: "Historical Prices", icon: <FaHistory /> },
   ];
 
   return (
@@ -193,19 +148,12 @@ export default function FarmerDashboard() {
           <div className="flex items-center gap-4">
             <img src="/farmerimg.jpg" alt="Farmer" className="h-14 w-14 object-cover rounded-full shadow border-4 border-lime-200" />
             <div>
-              <h1 className="font-extrabold text-emerald-800 text-2xl md:text-3xl drop-shadow-lg">{t.welcome}</h1>
+              <h1 className="font-extrabold text-emerald-800 text-2xl md:text-3xl drop-shadow-lg">Welcome, Farmer!</h1>
               <span className="font-bold text-base text-emerald-700">MalligeMitra</span>
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <select
-              className="bg-white text-emerald-700 rounded px-2 py-1 text-xs font-semibold shadow focus:outline-none"
-              value={lang}
-              onChange={e => setLang(e.target.value as LangKey)}
-            >
-              <option value="en">English</option>
-              <option value="kn">Kannada</option>
-            </select>
+            <GoogleTranslateWidgetBlended />
             <button
               className="h-10 w-10 flex items-center justify-center rounded-full bg-white border-2 border-white shadow cursor-pointer"
               onClick={() => setProfileOpen((open) => !open)}
@@ -228,23 +176,23 @@ export default function FarmerDashboard() {
         <div className="flex-1 flex flex-col items-center justify-start px-8 py-8 gap-8">
           {active === "dashboard" && (
             <div className="w-full max-w-2xl">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.dashboard}</h2>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Farmer Dashboard</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">{t.sellFlowers}</h3>
-                  <p className="text-neutral-700 text-sm">{t.sellFlowersDesc}</p>
+                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Sell Flowers</h3>
+                  <p className="text-neutral-700 text-sm">List your jasmine flowers for sale, set price and quantity.</p>
                 </div>
                 <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">{t.hireLaborers}</h3>
-                  <p className="text-neutral-700 text-sm">{t.hireLaborersDesc}</p>
+                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Hire Laborers</h3>
+                  <p className="text-neutral-700 text-sm">Find, request, and manage skilled labor for your farm.</p>
                 </div>
                 <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">{t.shareItems}</h3>
-                  <p className="text-neutral-700 text-sm">{t.shareItemsDesc}</p>
+                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Share/Sell Excess Items</h3>
+                  <p className="text-neutral-700 text-sm">List extra tools, rope, or supplies to share or sell.</p>
                 </div>
                 <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">{t.marketplace}</h3>
-                  <p className="text-neutral-700 text-sm">{t.marketplaceDesc}</p>
+                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Marketplace & Orders</h3>
+                  <p className="text-neutral-700 text-sm">View your orders and explore the virtual marketplace.</p>
                 </div>
               </div>
             </div>
@@ -254,56 +202,59 @@ export default function FarmerDashboard() {
           {/* STEP 2: The placeholder is replaced with the component call */}
           {/* ============================================================= */}
           {active === "priceCalculator" && (
-            <PriceCalculator t={t} />
+            <PriceCalculator t={{
+              priceCalculator: "Price Calculator",
+              priceCalculatorDesc: "Estimate your flower price based on quantity and market trends."
+            }} />
           )}
 
           {active === "sellFlowers" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.sellFlowers}</h2>
-              <p className="text-neutral-700 text-sm mb-4">{t.sellFlowersDesc}</p>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Sell Flowers</h2>
+              <p className="text-neutral-700 text-sm mb-4">List your jasmine flowers for sale, set price and quantity.</p>
               <div className="text-center text-neutral-400">[Sell Flowers Form Coming Soon]</div>
             </div>
           )}
           {active === "hireLaborers" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.hireLaborers}</h2>
-              <p className="text-neutral-700 text-sm mb-4">{t.hireLaborersDesc}</p>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Hire Laborers</h2>
+              <p className="text-neutral-700 text-sm mb-4">Find, request, and manage skilled labor for your farm.</p>
               <div className="text-center text-neutral-400">[Hire Laborers Coming Soon]</div>
             </div>
           )}
           {active === "shareItems" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.shareItems}</h2>
-              <p className="text-neutral-700 text-sm mb-4">{t.shareItemsDesc}</p>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Share/Sell Excess Items</h2>
+              <p className="text-neutral-700 text-sm mb-4">List extra tools, rope, or supplies to share or sell.</p>
               <div className="text-center text-neutral-400">[Share/Sell Items Coming Soon]</div>
             </div>
           )}
           {active === "marketplace" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.marketplace}</h2>
-              <p className="text-neutral-700 text-sm mb-4">{t.marketplaceDesc}</p>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Marketplace & Orders</h2>
+              <p className="text-neutral-700 text-sm mb-4">View your orders and explore the virtual marketplace.</p>
               <div className="text-center text-neutral-400">[Marketplace Coming Soon]</div>
             </div>
           )}
           {active === "forum" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.forum}</h2>
-              <p className="text-neutral-700 text-sm mb-4">{t.forumDesc}</p>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Farmer Forum</h2>
+              <p className="text-neutral-700 text-sm mb-4">Discuss, share advice, and connect with other farmers.</p>
               <div className="text-center text-neutral-400">[Forum Coming Soon]</div>
             </div>
           )}
           {active === "historicalPrices" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.historicalPrices}</h2>
-              <p className="text-neutral-700 text-sm mb-4">{t.historicalPricesDesc}</p>
+              <h2 className="font-bold text-emerald-700 text-xl mb-4">Historical Prices</h2>
+              <p className="text-neutral-700 text-sm mb-4">View jasmine flower prices from previous seasons.</p>
               <div className="text-center text-neutral-400">[Historical Prices Coming Soon]</div>
             </div>
           )}
         </div>
 
         <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
-          <p className="mb-1 text-base font-semibold">{t.copyright}</p>
-          <p className="text-xs">{t.built}<span className="text-pink-300">❤️</span> {t.by}</p>
+          <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
+          <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
         </footer>
       </div>
     </main>

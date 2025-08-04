@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 
 const translations = {
   EN: {
@@ -94,7 +95,7 @@ export default function PrivacyPage() {
             Back to Home
           </a>
         </div>
-        {/* No language/profile button */}
+        <GoogleTranslateWidgetBlended />
       </header>
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center justify-start px-8 py-8 gap-8">

@@ -1,3 +1,4 @@
+import GoogleTranslateWidget from '../../lib/GoogleTranslateWidget';
 // This is the most important line! It tells Next.js to run this code in the browser.
 "use client";
 
@@ -114,15 +115,15 @@ export default function RegisterPage() {
         <Link href="/" className="text-white hover:text-green-200 px-3 py-2 rounded-md transition-colors duration-200">
             Home
         </Link>
-        <div className="relative">
+        {/* <div className="relative">
             <select id="language-selector" className="block appearance-none w-full bg-transparent border border-white text-white py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-green-500 transition-colors duration-200">
-            <option value="en" className="text-gray-800">English</option>
+            <GoogleTranslateWidget />
             <option value="kn" className="text-gray-800">Kannada</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
             </div>
-        </div>
+        </div> */}
         </nav>
     </header>
 
@@ -549,7 +550,8 @@ export default function RegisterPage() {
 
       {/* This is the CSS part of your component, using Next.js's built-in styled-jsx. */}
       {/* The 'global' keyword makes these styles apply everywhere, like a normal stylesheet. */}
-      <style jsx global>{`
+      <style jsx global>{
+      `
         /* Custom styles to ensure Inter is the default font and Montserrat for titles */
         body {
             font-family: 'Inter', sans-serif;

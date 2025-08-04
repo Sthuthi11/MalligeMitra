@@ -12,7 +12,7 @@ const translations = {
     signup: 'Sign Up',
     aboutTitle: 'Why MalligeMitra?',
     aboutDesc1: 'Jasmine farmers in coastal Karnataka face major challenges: labor shortages, lack of tool access, middlemen dependency, and flower wastage. MalligeMitra bridges this gap.',
-    aboutDesc2: 'We connect farmers with skilled labor, tools, and buyers — including jasmine-based industries — through one unified platform.',
+    aboutDesc2: 'We connect farmers with skilled labor, tools, buyers, including jasmine-based industries — through one unified platform.',
     featuresTitle: 'What We Offer',
     features: [
       { title: 'Labor Support', icon: '🧑‍🌾', desc: 'Find and hire skilled labor easily.' },

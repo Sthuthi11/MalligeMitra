@@ -61,7 +61,7 @@ export default function Home() {
   return (
     <main className="font-sans text-neutral-900 bg-white">
       {/* Top Bar */}
-      <div className="w-full bg-emerald-900 text-white text-sm flex flex-col md:flex-row items-center justify-between px-4 py-2 gap-2">
+      <div className="w-full text-white text-sm flex flex-col md:flex-row items-center justify-between px-4 py-2 gap-2" style={{ backgroundColor: "#047857" }}>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1"><svg width="16" height="16" fill="currentColor" className="inline"><path d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4zm2-.5a.5.5 0 0 0-.5.5v.217l5 3.1 5-3.1V4a.5.5 0 0 0-.5-.5H4zm9 2.383-4.445 2.756a.5.5 0 0 1-.51 0L4 5.883V12a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V5.883z"/></svg> <a href="mailto: malligemitra@gmail.com" className="hover:underline"> malligemitra@gmail.com</a></span>
           <span className="flex items-center gap-1"><svg width="16" height="16" fill="currentColor" className="inline"><path d="M8 0a5 5 0 0 1 5 5c0 3.25-5 11-5 11S3 8.25 3 5a5 5 0 0 1 5-5zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg> {t.location}</span>
@@ -70,8 +70,9 @@ export default function Home() {
           <span className="flex items-center gap-1"><GoogleTranslateWidgetBlended /></span>
         </div>
       </div>
+
       {/* Hero with video background */}
-      <section className="relative w-full min-h-[90vh] flex overflow-hidden pt-16 md:pt-24">
+      <section className="relative w-full min-h-[40vh] flex overflow-hidden pt-8 md:pt-12">
         {/* Jasmine field background (image fallback with dark overlay) */}
         <div className="absolute inset-0 w-full h-full z-0">
           {/* HERO BACKGROUND IMAGE: Using local public/herobg.jpg */}
@@ -82,13 +83,11 @@ export default function Home() {
             style={{ filter: 'brightness(0.45) saturate(1.1)' }}
             draggable={false}
           />
-          {/* If you have a jasmine field video, replace the <img> above with a <video> and similar dark overlay */}
         </div>
         <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/70 via-black/40 to-black/60 z-0 pointer-events-none" />
         <div className="relative z-10 flex flex-col items-start w-full h-full px-4 md:px-20 text-left max-w-3xl">
           {/* Logo placeholder */}
           <div className="w-28 h-28 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-white flex items-center justify-center">
-            {/* Logo image from public/icon.jpg, fills the circle */}
             <img
               src="/icon.jpg"
               alt="MalligeMitra Logo"
@@ -100,10 +99,14 @@ export default function Home() {
           <p className={`max-w-3xl mb-10 text-white font-semibold drop-shadow-lg ${lang === 'KN' ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'}`}>
             {t.heroDesc}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <a
               href="/login"
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-emerald-500 via-lime-400 to-yellow-300 text-emerald-900 font-bold shadow-lg hover:from-emerald-600 hover:via-lime-500 hover:to-yellow-400 hover:scale-105 transition-transform duration-200 border-2 border-white/30"
+              className="px-8 py-3 rounded-full font-bold shadow-lg border-2 border-white/30 transition-transform duration-200"
+              style={{
+                backgroundColor: "#047857",
+                color: "#fff"
+              }}
             >
               {t.login}
             </a>
@@ -114,6 +117,8 @@ export default function Home() {
               {t.signup}
             </a>
           </div>
+          {/* Add a spacer to show a bit of the background image below the buttons */}
+          <div className="flex-grow" />
         </div>
       </section>
 
@@ -160,7 +165,7 @@ export default function Home() {
 
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-10 text-center shadow-inner mt-10">
+      <footer className="text-white py-10 text-center shadow-inner mt-10" style={{ backgroundColor: "#047857" }}>
         <p className="mb-2 text-lg font-semibold">&copy; 2025 MalligeMitra. {t.copyright}</p>
         <div className="mb-4 flex flex-wrap justify-center gap-6 text-sm">
           <a href="/faqs" className="hover:underline hover:text-lime-200 transition-colors">{t.faqs}</a>

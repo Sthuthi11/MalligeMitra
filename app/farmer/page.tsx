@@ -1,4 +1,155 @@
 "use client";
+// --- Real Content Components ---
+import React from "react";
+
+function SellFlowersForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ variety: "Udupi Mallige", quantity: "", price: "" });
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitted(true);
+  }
+  return submitted ? (
+    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200 text-center">
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">Listing Submitted!</h2>
+      <p className="text-neutral-700 text-sm mb-4">Your listing for {form.variety} ({form.quantity} atte) at ₹{form.price}/atte has been submitted.</p>
+      <button className="mt-4 px-4 py-2 bg-emerald-600 text-white rounded" onClick={() => setSubmitted(false)}>Add Another</button>
+    </div>
+  ) : (
+    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">Sell Flowers</h2>
+      <p className="text-neutral-700 text-sm mb-4">List your jasmine flowers for sale, set price and quantity.</p>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Variety</label>
+          <select name="variety" value={form.variety} onChange={handleChange} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm">
+            <option>Udupi Mallige</option>
+            <option>Mangaluru Mallige</option>
+            <option>Jaji Mallige</option>
+            <option>Shankarpura Mallige</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Quantity (Atte)</label>
+          <input name="quantity" type="number" value={form.quantity} onChange={handleChange} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm" placeholder="Enter quantity" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Price per Atte (₹)</label>
+          <input name="price" type="number" value={form.price} onChange={handleChange} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm" placeholder="Enter price" required />
+        </div>
+        <button type="submit" className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700">Submit Listing</button>
+      </form>
+    </div>
+  );
+}
+
+function HireLaborers() {
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ desc: "", date: "", count: "" });
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitted(true);
+  }
+  return submitted ? (
+    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200 text-center">
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">Request Submitted!</h2>
+      <p className="text-neutral-700 text-sm mb-4">Your request for {form.count} laborers on {form.date} has been submitted.</p>
+      <button className="mt-4 px-4 py-2 bg-emerald-600 text-white rounded" onClick={() => setSubmitted(false)}>Request Another</button>
+    </div>
+  ) : (
+    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">Hire Laborers</h2>
+      <p className="text-neutral-700 text-sm mb-4">Find, request, and manage skilled labor for your farm.</p>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Work Description</label>
+          <input name="desc" type="text" value={form.desc} onChange={handleChange} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm" placeholder="Describe the work" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Date Needed</label>
+          <input name="date" type="date" value={form.date} onChange={handleChange} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Number of Laborers</label>
+          <input name="count" type="number" value={form.count} onChange={handleChange} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm" placeholder="e.g. 3" required />
+        </div>
+        <button type="submit" className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700">Request Laborers</button>
+      </form>
+    </div>
+  );
+}
+
+function FarmerForum() {
+  const [posts, setPosts] = useState([
+    { q: "How do you control pests naturally?", a: "I use neem oil spray and intercropping with marigold.", user: "Suresh" },
+    { q: "Best time to harvest Mallige?", a: "Early morning before sunrise gives best fragrance.", user: "Lakshmi" },
+  ]);
+  const [newPost, setNewPost] = useState("");
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (newPost.trim()) {
+      setPosts([{ q: newPost, a: "(Awaiting replies)", user: "You" }, ...posts]);
+      setNewPost("");
+    }
+  }
+  return (
+    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">Farmer Forum</h2>
+      <p className="text-neutral-700 text-sm mb-4">Discuss, share advice, and connect with other farmers.</p>
+      <div className="space-y-4">
+        {posts.map((post, i) => (
+          <div key={i} className="bg-lime-50 p-4 rounded border border-lime-200">
+            <p className="font-semibold text-emerald-700">{post.q}</p>
+            <p className="text-neutral-700 text-sm">- {post.user}: {post.a}</p>
+          </div>
+        ))}
+        <form className="pt-4 border-t mt-4" onSubmit={handleSubmit}>
+          <label className="block text-sm font-medium text-neutral-700 mb-1">Start a Discussion</label>
+          <input type="text" value={newPost} onChange={e => setNewPost(e.target.value)} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm mb-2" placeholder="Ask a question or share advice..." required />
+          <button type="submit" className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700">Post</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function HistoricalPrices() {
+  const prices = [
+    { date: "2025-08-01", variety: "Udupi Mallige", price: 1200 },
+    { date: "2025-07-28", variety: "Mangaluru Mallige", price: 1100 },
+    { date: "2025-07-25", variety: "Jaji Mallige", price: 950 },
+  ];
+  return (
+    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">Historical Prices</h2>
+      <p className="text-neutral-700 text-sm mb-4">View jasmine flower prices from previous seasons.</p>
+      <table className="w-full text-sm border border-lime-200 rounded">
+        <thead>
+          <tr className="bg-lime-50">
+            <th className="p-2 border-b">Date</th>
+            <th className="p-2 border-b">Variety</th>
+            <th className="p-2 border-b">Price (₹/Atte)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {prices.map((row, i) => (
+            <tr key={i}>
+              <td className="p-2 border-b">{row.date}</td>
+              <td className="p-2 border-b">{row.variety}</td>
+              <td className="p-2 border-b">{row.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 import { useState, useEffect } from "react"; // Step 3: Added 'useEffect' here
 import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory } from "react-icons/fa";
@@ -116,14 +267,12 @@ export default function FarmerDashboard() {
   const [active, setActive] = useState("dashboard");
   // Labels are now static English, since Google Translate widget handles translation
   const navItems = [
-    { key: "dashboard", label: "Farmer Dashboard", icon: <FaLeaf /> },
     { key: "priceCalculator", label: "Price Calculator", icon: <FaCalculator /> },
     { key: "sellFlowers", label: "Sell Flowers", icon: <FaLeaf /> },
     { key: "hireLaborers", label: "Hire Laborers", icon: <FaUsers /> },
-    { key: "shareItems", label: "Share/Sell Excess Items", icon: <FaBoxOpen /> },
-    { key: "marketplace", label: "Marketplace & Orders", icon: <FaStore /> },
     { key: "forum", label: "Farmer Forum", icon: <FaComments /> },
     { key: "historicalPrices", label: "Historical Prices", icon: <FaHistory /> },
+    { key: "marketplace", label: "Marketplace & Orders", icon: <FaStore /> },
   ];
 
   return (
@@ -174,29 +323,7 @@ export default function FarmerDashboard() {
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-start px-8 py-8 gap-8">
-          {active === "dashboard" && (
-            <div className="w-full max-w-2xl">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Farmer Dashboard</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Sell Flowers</h3>
-                  <p className="text-neutral-700 text-sm">List your jasmine flowers for sale, set price and quantity.</p>
-                </div>
-                <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Hire Laborers</h3>
-                  <p className="text-neutral-700 text-sm">Find, request, and manage skilled labor for your farm.</p>
-                </div>
-                <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Share/Sell Excess Items</h3>
-                  <p className="text-neutral-700 text-sm">List extra tools, rope, or supplies to share or sell.</p>
-                </div>
-                <div className="bg-white p-6 rounded-xl shadow border border-lime-200 hover:border-emerald-400 transition-colors duration-200">
-                  <h3 className="font-semibold mb-2 text-emerald-700 text-lg">Marketplace & Orders</h3>
-                  <p className="text-neutral-700 text-sm">View your orders and explore the virtual marketplace.</p>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Farmer Dashboard and Share/Sell Excess Items removed */}
           
           {/* ============================================================= */}
           {/* STEP 2: The placeholder is replaced with the component call */}
@@ -209,26 +336,12 @@ export default function FarmerDashboard() {
           )}
 
           {active === "sellFlowers" && (
-            <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Sell Flowers</h2>
-              <p className="text-neutral-700 text-sm mb-4">List your jasmine flowers for sale, set price and quantity.</p>
-              <div className="text-center text-neutral-400">[Sell Flowers Form Coming Soon]</div>
-            </div>
+            <SellFlowersForm />
           )}
           {active === "hireLaborers" && (
-            <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Hire Laborers</h2>
-              <p className="text-neutral-700 text-sm mb-4">Find, request, and manage skilled labor for your farm.</p>
-              <div className="text-center text-neutral-400">[Hire Laborers Coming Soon]</div>
-            </div>
+            <HireLaborers />
           )}
-          {active === "shareItems" && (
-            <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Share/Sell Excess Items</h2>
-              <p className="text-neutral-700 text-sm mb-4">List extra tools, rope, or supplies to share or sell.</p>
-              <div className="text-center text-neutral-400">[Share/Sell Items Coming Soon]</div>
-            </div>
-          )}
+          {/* Share/Sell Excess Items removed */}
           {active === "marketplace" && (
             <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
               <h2 className="font-bold text-emerald-700 text-xl mb-4">Marketplace & Orders</h2>
@@ -237,21 +350,13 @@ export default function FarmerDashboard() {
             </div>
           )}
           {active === "forum" && (
-            <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Farmer Forum</h2>
-              <p className="text-neutral-700 text-sm mb-4">Discuss, share advice, and connect with other farmers.</p>
-              <div className="text-center text-neutral-400">[Forum Coming Soon]</div>
-            </div>
+            <FarmerForum />
           )}
+
           {active === "historicalPrices" && (
-            <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Historical Prices</h2>
-              <p className="text-neutral-700 text-sm mb-4">View jasmine flower prices from previous seasons.</p>
-              <div className="text-center text-neutral-400">[Historical Prices Coming Soon]</div>
-            </div>
+            <HistoricalPrices />
           )}
         </div>
-
         <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
           <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
           <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
@@ -260,3 +365,4 @@ export default function FarmerDashboard() {
     </main>
   );
 }
+

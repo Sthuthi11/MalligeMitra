@@ -161,11 +161,8 @@ export default function VendorDashboard() {
 
         {/* Footer */}
         <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
-          <div className="flex flex-col items-center gap-1">
-            <GoogleTranslateWidgetBlended />
-            <p className="mb-1 text-base font-semibold">{t.copyright}</p>
-            <p className="text-xs">{t.built}<span className="text-pink-300">❤️</span> {t.by}</p>
-          </div>
+          <p className="mb-1 text-base font-semibold">{t.copyright}</p>
+          <p className="text-xs">{t.built}<span className="text-pink-300">❤️</span> {t.by}</p>
         </footer>
       </div>
     </main>

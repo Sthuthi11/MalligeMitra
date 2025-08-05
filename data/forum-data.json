@@ -17,6 +17,24 @@
       "authorUsername": "Mahesh K",
       "createdAt": "2025-07-30T05:35:34.706Z",
       "answersCount": 1
+    },
+    {
+      "id": "8babd005-545d-4ca4-b20d-e2f96ed53a17",
+      "title": "Are any of using organic products?",
+      "content": "Do List",
+      "authorId": "1",
+      "authorUsername": "Farmer John",
+      "createdAt": "2025-08-05T13:46:34.358Z",
+      "answersCount": 0
+    },
+    {
+      "id": "96d9018c-9c6e-463d-bb90-3a88e689418f",
+      "title": "Are any of u using organic products?",
+      "content": "Please list",
+      "authorId": "1",
+      "authorUsername": "Farmer John",
+      "createdAt": "2025-08-05T13:47:47.880Z",
+      "answersCount": 0
     }
   ],
   "answers": [

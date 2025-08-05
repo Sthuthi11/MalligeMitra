@@ -1,8 +1,58 @@
 "use client";
-// --- Real Content Components ---
-import React from "react";
 
-function SellFlowersForm() {
+// STEP 1: All imports are now cleaned up and consolidated at the top.
+import React, { useState, useEffect } from "react";
+import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory } from "react-icons/fa";
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
+
+// STEP 2: The TEXT object for translations is kept here to be used by the whole page.
+const TEXT = {
+  en: {
+    dashboard: "Farmer Dashboard",
+    welcome: "Welcome, Farmer!",
+    sellFlowers: "Sell Flowers",
+    sellFlowersDesc: "List your jasmine flowers for sale, set price and quantity.",
+    hireLaborers: "Hire Laborers",
+    hireLaborersDesc: "Find, request, and manage skilled labor for your farm.",
+    forum: "Farmer Forum",
+    forumDesc: "Discuss, share advice, and connect with other farmers.",
+    historicalPrices: "Historical Prices",
+    historicalPricesDesc: "View jasmine flower prices from previous seasons.",
+    priceCalculator: "Price Calculator",
+    priceCalculatorDesc: "Estimate your flower price based on quantity and market trends.",
+    marketplace: "Marketplace & Orders",
+    marketplaceDesc: "View your orders and explore the virtual marketplace.",
+    copyright: "© 2025 MalligeMitra. All rights reserved.",
+    built: "Built with ",
+    by: "by Team Regenesis"
+  },
+  kn: {
+    dashboard: "ರೈತ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    welcome: "ಸ್ವಾಗತ ರೈತರೆ!",
+    sellFlowers: "ಹೂವುಗಳನ್ನು ಮಾರಾಟ ಮಾಡಿ",
+    sellFlowersDesc: "ನಿಮ್ಮ ಮಲ್ಲಿಗೆ ಹೂಗಳನ್ನು ಮಾರಾಟಕ್ಕೆ ಪಟ್ಟಿ ಮಾಡಿ, ಬೆಲೆ ಮತ್ತು ಪ್ರಮಾಣವನ್ನು ಹೊಂದಿಸಿ.",
+    hireLaborers: "ಕಾರ್ಮಿಕರನ್ನು ನೇಮಿಸಿ",
+    hireLaborersDesc: "ನಿಮ್ಮ ಕೃಷಿಗೆ ನಿಪುಣ ಕಾರ್ಮಿಕರನ್ನು ಹುಡುಕಿ ಮತ್ತು ನಿರ್ವಹಿಸಿ.",
+    forum: "ರೈತ ಫೋರಮ್",
+    forumDesc: "ಚರ್ಚಿಸಿ, ಸಲಹೆ ಹಂಚಿಕೊಳ್ಳಿ, ಮತ್ತು ಇತರ ರೈತರೊಂದಿಗೆ ಸಂಪರ್ಕ ಸಾಧಿಸಿ.",
+    historicalPrices: "ಐತಿಹಾಸಿಕ ಬೆಲೆಗಳು",
+    historicalPricesDesc: "ಹಿಂದಿನ ಋತುಗಳಲ್ಲಿ ಮಲ್ಲಿಗೆ ಹೂವಿನ ಬೆಲೆಗಳನ್ನು ನೋಡಿ.",
+    priceCalculator: "ಬೆಲೆ ಗಣಕಯಂತ್ರ",
+    priceCalculatorDesc: "ಪ್ರಮಾಣ ಮತ್ತು ಮಾರುಕಟ್ಟೆ ಪ್ರವೃತ್ತಿಗಳ ಆಧಾರದ ಮೇಲೆ ನಿಮ್ಮ ಹೂವಿನ ಬೆಲೆಯನ್ನು ಅಂದಾಜಿಸಿ.",
+    marketplace: "ಮಾರ್ಕೆಟ್ & ಆರ್ಡರ್‍ಗಳು",
+    marketplaceDesc: "ನಿಮ್ಮ ಆರ್ಡರ್‍ಗಳನ್ನು ನೋಡಿ ಮತ್ತು ವರ್ಚುವಲ್ ಮಾರ್ಕೆಟ್ ಅನ್ವೇಷಿಸಿ.",
+    copyright: "© 2025 MalligeMitra. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
+    built: "ನಿರ್ಮಿಸಲಾಗಿದೆ ",
+    by: "Team Regenesis"
+  }
+} as const;
+
+type LangKey = keyof typeof TEXT;
+
+
+// --- Helper Components for Different Dashboard Sections ---
+
+function SellFlowersForm({ t }: { t: any }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ variety: "Udupi Mallige", quantity: "", price: "" });
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -20,8 +70,8 @@ function SellFlowersForm() {
     </div>
   ) : (
     <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-      <h2 className="font-bold text-emerald-700 text-xl mb-4">Sell Flowers</h2>
-      <p className="text-neutral-700 text-sm mb-4">List your jasmine flowers for sale, set price and quantity.</p>
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.sellFlowers}</h2>
+      <p className="text-neutral-700 text-sm mb-4">{t.sellFlowersDesc}</p>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-1">Variety</label>
@@ -46,7 +96,7 @@ function SellFlowersForm() {
   );
 }
 
-function HireLaborers() {
+function HireLaborers({ t }: { t: any }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ desc: "", date: "", count: "" });
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -64,8 +114,8 @@ function HireLaborers() {
     </div>
   ) : (
     <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-      <h2 className="font-bold text-emerald-700 text-xl mb-4">Hire Laborers</h2>
-      <p className="text-neutral-700 text-sm mb-4">Find, request, and manage skilled labor for your farm.</p>
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.hireLaborers}</h2>
+      <p className="text-neutral-700 text-sm mb-4">{t.hireLaborersDesc}</p>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-1">Work Description</label>
@@ -85,7 +135,7 @@ function HireLaborers() {
   );
 }
 
-function FarmerForum() {
+function FarmerForum({ t }: { t: any }) {
   const [posts, setPosts] = useState([
     { q: "How do you control pests naturally?", a: "I use neem oil spray and intercropping with marigold.", user: "Suresh" },
     { q: "Best time to harvest Mallige?", a: "Early morning before sunrise gives best fragrance.", user: "Lakshmi" },
@@ -100,8 +150,8 @@ function FarmerForum() {
   }
   return (
     <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-      <h2 className="font-bold text-emerald-700 text-xl mb-4">Farmer Forum</h2>
-      <p className="text-neutral-700 text-sm mb-4">Discuss, share advice, and connect with other farmers.</p>
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.forum}</h2>
+      <p className="text-neutral-700 text-sm mb-4">{t.forumDesc}</p>
       <div className="space-y-4">
         {posts.map((post, i) => (
           <div key={i} className="bg-lime-50 p-4 rounded border border-lime-200">
@@ -119,7 +169,7 @@ function FarmerForum() {
   );
 }
 
-function HistoricalPrices() {
+function HistoricalPrices({ t }: { t: any }) {
   const prices = [
     { date: "2025-08-01", variety: "Udupi Mallige", price: 1200 },
     { date: "2025-07-28", variety: "Mangaluru Mallige", price: 1100 },
@@ -127,8 +177,8 @@ function HistoricalPrices() {
   ];
   return (
     <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-      <h2 className="font-bold text-emerald-700 text-xl mb-4">Historical Prices</h2>
-      <p className="text-neutral-700 text-sm mb-4">View jasmine flower prices from previous seasons.</p>
+      <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.historicalPrices}</h2>
+      <p className="text-neutral-700 text-sm mb-4">{t.historicalPricesDesc}</p>
       <table className="w-full text-sm border border-lime-200 rounded">
         <thead>
           <tr className="bg-lime-50">
@@ -150,16 +200,7 @@ function HistoricalPrices() {
     </div>
   );
 }
-import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
-import { useState, useEffect } from "react"; // Step 3: Added 'useEffect' here
-import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory } from "react-icons/fa";
 
-
-
-
-// =============================================================
-// STEP 1: The huge calculator code block is defined here
-// =============================================================
 const PriceCalculator = ({ t }: { t: any }) => {
   const [variety, setVariety] = useState("Udupi Mallige");
   const [atte, setAtte] = useState("");
@@ -261,18 +302,19 @@ const PriceCalculator = ({ t }: { t: any }) => {
 
 
 // This is your main FarmerDashboard component
-
 export default function FarmerDashboard() {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [active, setActive] = useState("dashboard");
-  // Labels are now static English, since Google Translate widget handles translation
+  const [active, setActive] = useState("priceCalculator");
+  // Use English text for nav and content, Google Translate widget will handle translation
+  const t = TEXT["en"];
+
   const navItems = [
-    { key: "priceCalculator", label: "Price Calculator", icon: <FaCalculator /> },
-    { key: "sellFlowers", label: "Sell Flowers", icon: <FaLeaf /> },
-    { key: "hireLaborers", label: "Hire Laborers", icon: <FaUsers /> },
-    { key: "forum", label: "Farmer Forum", icon: <FaComments /> },
-    { key: "historicalPrices", label: "Historical Prices", icon: <FaHistory /> },
-    { key: "marketplace", label: "Marketplace & Orders", icon: <FaStore /> },
+    { key: "priceCalculator", label: t.priceCalculator, icon: <FaCalculator /> },
+    { key: "sellFlowers", label: t.sellFlowers, icon: <FaLeaf /> },
+    { key: "hireLaborers", label: t.hireLaborers, icon: <FaUsers /> },
+    { key: "forum", label: t.forum, icon: <FaComments /> },
+    { key: "historicalPrices", label: t.historicalPrices, icon: <FaHistory /> },
+    { key: "marketplace", label: t.marketplace, icon: <FaStore /> },
   ];
 
   return (
@@ -282,6 +324,7 @@ export default function FarmerDashboard() {
         {navItems.map(item => (
           <button
             key={item.key}
+            // STEP 4: Fixed className syntax error
             className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 hover:bg-lime-600 focus:outline-none ${active === item.key ? "bg-lime-400 text-emerald-900" : ""}`}
             onClick={() => setActive(item.key)}
             aria-label={item.label}
@@ -297,7 +340,8 @@ export default function FarmerDashboard() {
           <div className="flex items-center gap-4">
             <img src="/farmerimg.jpg" alt="Farmer" className="h-14 w-14 object-cover rounded-full shadow border-4 border-lime-200" />
             <div>
-              <h1 className="font-extrabold text-emerald-800 text-2xl md:text-3xl drop-shadow-lg">Welcome, Farmer!</h1>
+              {/* STEP 3: Re-integrated the 't' object for translation */}
+              <h1 className="font-extrabold text-emerald-800 text-2xl md:text-3xl drop-shadow-lg">{t.welcome}</h1>
               <span className="font-bold text-base text-emerald-700">MalligeMitra</span>
             </div>
           </div>
@@ -323,46 +367,34 @@ export default function FarmerDashboard() {
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-start px-8 py-8 gap-8">
-          {/* Farmer Dashboard and Share/Sell Excess Items removed */}
-          
-          {/* ============================================================= */}
-          {/* STEP 2: The placeholder is replaced with the component call */}
-          {/* ============================================================= */}
-          {active === "priceCalculator" && (
-            <PriceCalculator t={{
-              priceCalculator: "Price Calculator",
-              priceCalculatorDesc: "Estimate your flower price based on quantity and market trends."
-            }} />
-          )}
-
-          {active === "sellFlowers" && (
-            <SellFlowersForm />
-          )}
-          {active === "hireLaborers" && (
-            <HireLaborers />
-          )}
-          {/* Share/Sell Excess Items removed */}
-          {active === "marketplace" && (
-            <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-              <h2 className="font-bold text-emerald-700 text-xl mb-4">Marketplace & Orders</h2>
-              <p className="text-neutral-700 text-sm mb-4">View your orders and explore the virtual marketplace.</p>
-              <div className="text-center text-neutral-400">[Marketplace Coming Soon]</div>
-            </div>
-          )}
-          {active === "forum" && (
-            <FarmerForum />
-          )}
-
-          {active === "historicalPrices" && (
-            <HistoricalPrices />
-          )}
+            {active === "priceCalculator" && (
+              <PriceCalculator t={t} />
+            )}
+            {active === "sellFlowers" && (
+              <SellFlowersForm t={t} />
+            )}
+            {active === "hireLaborers" && (
+              <HireLaborers t={t} />
+            )}
+            {active === "marketplace" && (
+              <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
+                <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.marketplace}</h2>
+                <p className="text-neutral-700 text-sm mb-4">{t.marketplaceDesc}</p>
+                <div className="text-center text-neutral-400">[Marketplace Coming Soon]</div>
+              </div>
+            )}
+            {active === "forum" && (
+              <FarmerForum t={t} />
+            )}
+            {active === "historicalPrices" && (
+              <HistoricalPrices t={t} />
+            )}
         </div>
         <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
-          <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
-          <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
+          <p className="mb-1 text-base font-semibold">{t.copyright}</p>
+          <p className="text-xs">{t.built}<span className="text-pink-300">❤</span> {t.by}</p>
         </footer>
       </div>
     </main>
   );
 }
-

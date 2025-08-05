@@ -1,6 +1,6 @@
 // This module provides MOCK AUTHENTICATION data and functions for demonstration purposes.
 
-import { User } from '../types';
+import { User } from '../types/forum';
 
 // --- Mock User Data ---
 // This array holds all available mock users that can "log in" for testing.

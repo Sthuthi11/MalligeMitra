@@ -557,7 +557,7 @@ function Marketplace({ t }: { t: TFunction }) {
                 value={newItem.description}
                 onChange={handleChange}
                 className="w-full p-2 border border-neutral-300 rounded-md"
-                rows="3"
+                rows={3} // Corrected
                 placeholder="Provide a detailed description of your item..."
               ></textarea>
             </div>

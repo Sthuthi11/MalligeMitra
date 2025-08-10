@@ -5,7 +5,7 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 to-lime-100">
       {/* Header */}
-      <header className="flex items-center justify-between px-8 py-4 bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white shadow-md">
+      <header className="flex items-center justify-between px-8 py-4 text-white shadow-md" style={{ backgroundColor: "#047857" }}>
         <div className="flex items-center gap-4">
           <a href="/" className="flex items-center gap-2 text-lg font-semibold hover:underline">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
@@ -54,9 +54,9 @@ export default function TermsPage() {
           </div>
         </div>
       </main>
-      <footer className="bg-gradient-to-r from-emerald-700 via-lime-600 to-green-700 text-white py-3 text-center shadow-inner mt-auto">
+      <footer className="text-white py-3 text-center shadow-inner mt-auto" style={{ backgroundColor: "#047857" }}>
         <p className="mb-1 text-base font-semibold">© 2025 MalligeMitra. All rights reserved.</p>
-        <p className="text-xs">Built with <span className="text-pink-300">❤</span> by Team Regen.</p>
+        <p className="text-xs">Built with <span className="text-pink-300">❤️</span> by Team Regenesis</p>
       </footer>
     </div>
   );

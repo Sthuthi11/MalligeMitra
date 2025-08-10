@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
+import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended'; // Import the Google Translate component
 
 // A small, reusable component for the login form fields.
 const LoginForm = ({ roleName, onSubmit }: { roleName: string; onSubmit: (e: React.FormEvent) => void }) => {
@@ -42,10 +43,10 @@ const LoginForm = ({ roleName, onSubmit }: { roleName: string; onSubmit: (e: Rea
           Login as {roleName}
         </button>
 
-        {/* Link to Register Page */}
+        {/* Link to Register Page, now correctly pointing to /signup */}
         <p className="text-center text-sm text-gray-600 pt-2">
           No account?{' '}
-          <Link href="/" className="text-green-600 hover:underline">
+          <Link href="/signup" className="text-green-600 hover:underline">
             Register here
           </Link>
         </p>
@@ -105,6 +106,7 @@ export default function LoginPage() {
           <Link href="/" className="text-white hover:text-green-200 px-3 py-2 rounded-md transition-colors duration-200">
             Home
           </Link>
+          <GoogleTranslateWidgetBlended /> {/* Added the Google Translate component here */}
         </nav>
       </header>
 

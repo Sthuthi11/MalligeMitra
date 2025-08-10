@@ -173,13 +173,21 @@ const ProfilePreviewModal = ({ profile, onClose, t }: { profile: any, onClose: (
 
 // --- Helper Component 2: The form to list skills ---
 const ListSkillsForm = ({ t }: { t: any }) => {
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState<{
+    name: string;
+    location: string;
+    phone: string;
+    experience: string;
+    bio: string;
+    skills: string[]; // Corrected type here
+    imagePreviewUrl: string;
+  }>({
     name: "",
     location: "",
     phone: "",
     experience: "",
     bio: "",
-    skills: [],
+    skills: [], // Initialized as an empty string array
     imagePreviewUrl: "",
   });
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
@@ -417,9 +425,9 @@ const PickJobsSection = ({ t }: { t: any }) => {
 
 // --- Helper Component 4: The Request Training Section ---
 const RequestTrainingSection = ({ t }: { t: any }) => {
-  const availableTrainings = [ 
-    { id: 1, title: "Advanced Pruning & Plant Care", provider: "Krishi Vigyan Kendra, Mangaluru", duration: "2 Days", description: "Learn techniques for effective pruning to increase flower yield and plant health." }, 
-    { id: 2, title: "Natural Pest Control Methods", provider: "Local Farmer's Cooperative", duration: "1 Day Workshop", description: "Hands-on training for creating and using organic pesticides for jasmine plants." } 
+  const availableTrainings = [
+    { id: 1, title: "Advanced Pruning & Plant Care", provider: "Krishi Vigyan Kendra, Mangaluru", duration: "2 Days", description: "Learn techniques for effective pruning to increase flower yield and plant health." },
+    { id: 2, title: "Natural Pest Control Methods", provider: "Local Farmer's Cooperative", duration: "1 Day Workshop", description: "Hands-on training for creating and using organic pesticides for jasmine plants." }
   ];
   const [topic, setTopic] = useState("");
   const [notes, setNotes] = useState("");

@@ -79,12 +79,11 @@ const TEXT = {
   }
 } as const;
 
-type LangKey = keyof typeof TEXT;
-
+type TFunction = typeof TEXT.en; // Correctly derive the type for 't'
 
 // --- Helper Components for Different Dashboard Sections ---
 
-function SellFlowersForm({ t }) {
+function SellFlowersForm({ t }: { t: TFunction }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ variety: "Udupi Mallige", quantity: "", price: "" });
   function handleChange(e) {
@@ -128,7 +127,7 @@ function SellFlowersForm({ t }) {
   );
 }
 
-function HireLaborers({ t }) {
+function HireLaborers({ t }: { t: TFunction }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ desc: "", date: "", count: "" });
   function handleChange(e) {
@@ -167,10 +166,10 @@ function HireLaborers({ t }) {
   );
 }
 
-function FarmerForum({ t }) {
-  const [posts, setPosts] = useState([]);
+function FarmerForum({ t }: { t: TFunction }) {
+  const [posts, setPosts] = useState<any[]>([]); // Use a more specific type if possible
   const [newQuestion, setNewQuestion] = useState("");
-  const [newReply, setNewReply] = useState({});
+  const [newReply, setNewReply] = useState<Record<number, string>>({});
 
   useEffect(() => {
     const savedPosts = localStorage.getItem('farmerForumPosts');
@@ -179,12 +178,12 @@ function FarmerForum({ t }) {
     }
   }, []);
 
-  const savePosts = (updatedPosts) => {
+  const savePosts = (updatedPosts: any[]) => {
     setPosts(updatedPosts);
     localStorage.setItem('farmerForumPosts', JSON.stringify(updatedPosts));
   };
 
-  const handlePostQuestion = (e) => {
+  const handlePostQuestion = (e: React.FormEvent) => {
     e.preventDefault();
     if (newQuestion.trim()) {
       const newPost = {
@@ -200,7 +199,7 @@ function FarmerForum({ t }) {
     }
   };
 
-  const handlePostReply = (postId) => {
+  const handlePostReply = (postId: number) => {
     const replyText = newReply[postId];
     if (replyText.trim()) {
       const updatedPosts = posts.map(post => {
@@ -257,7 +256,7 @@ function FarmerForum({ t }) {
 
             <div className="space-y-3 pl-4 border-l-2 border-lime-400">
               {post.answers.length > 0 ? (
-                post.answers.map((answer) => (
+                post.answers.map((answer: any) => (
                   <div key={answer.id} className="bg-white p-3 rounded shadow-sm">
                     <p className="text-neutral-800 text-sm break-words">{answer.text}</p>
                     <p className="text-xs text-neutral-500 mt-1">
@@ -293,7 +292,7 @@ function FarmerForum({ t }) {
   );
 }
 
-function HistoricalPrices({ t }) {
+function HistoricalPrices({ t }: { t: TFunction }) {
   const prices = [
     { date: "2025-08-01", variety: "Udupi Mallige", price: 1200 },
     { date: "2025-07-28", variety: "Mangaluru Mallige", price: 1100 },
@@ -325,7 +324,7 @@ function HistoricalPrices({ t }) {
   );
 }
 
-const PriceCalculator = ({ t }) => {
+const PriceCalculator = ({ t }: { t: TFunction }) => {
   const [variety, setVariety] = useState("Udupi Mallige");
   const [atte, setAtte] = useState("");
   const [chendu, setChendu] = useState("");
@@ -395,7 +394,7 @@ const PriceCalculator = ({ t }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1">Agent Commission</label>
-              <div className="relative">
+            <div className="relative">
               <input type="number" placeholder="10" value={commission} onChange={(e) => setCommission(e.target.value)} className="w-full p-2 pr-7 border border-neutral-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500" />
               <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-500">%</span>
             </div>
@@ -431,8 +430,8 @@ const initialMarketplaceItems = [
   { id: 2, name: "Jasmine Thread (1 roll)", description: "Strong and biodegradable thread for stringing flowers.", price: 200, image: "https://5.imimg.com/data5/SELLER/Default/2021/7/CK/CL/AY/131065715/mallige-thread-500x500.jpg", seller: "Rajesh" },
 ];
 
-function Marketplace({ t }) {
-  const [items, setItems] = useState([]);
+function Marketplace({ t }: { t: TFunction }) {
+  const [items, setItems] = useState<any[]>([]); // Use a more specific type if possible
   const [showAddForm, setShowAddForm] = useState(false);
   const [newItem, setNewItem] = useState({
     id: null,
@@ -442,7 +441,7 @@ function Marketplace({ t }) {
     image: null,
     seller: currentUser,
   });
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
 
   // Load items from local storage on component mount
   useEffect(() => {
@@ -456,18 +455,18 @@ function Marketplace({ t }) {
   }, []);
 
   // Save items to local storage whenever the items state changes
-  const saveItems = (updatedItems) => {
+  const saveItems = (updatedItems: any[]) => {
     setItems(updatedItems);
     localStorage.setItem('marketplaceItems', JSON.stringify(updatedItems));
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewItem({ ...newItem, [name]: value });
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -481,7 +480,7 @@ function Marketplace({ t }) {
     }
   };
 
-  const handleAddItem = (e) => {
+  const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
     if (newItem.name && newItem.price && newItem.image) {
       const itemWithId = { ...newItem, id: Date.now() };
@@ -500,7 +499,7 @@ function Marketplace({ t }) {
     }
   };
 
-  const handleBuyItem = (itemId) => {
+  const handleBuyItem = (itemId: number) => {
     const updatedItems = items.filter(item => item.id !== itemId);
     saveItems(updatedItems);
     alert("Item purchased successfully!");
@@ -579,7 +578,7 @@ function Marketplace({ t }) {
                 />
                 {imagePreview && (
                   <div className="mt-4">
-                    <img src={imagePreview} alt="Image Preview" className="h-24 w-24 object-cover rounded-md border border-neutral-300" />
+                    <img src={imagePreview as string} alt="Image Preview" className="h-24 w-24 object-cover rounded-md border border-neutral-300" />
                   </div>
                 )}
               </div>

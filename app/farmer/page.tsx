@@ -440,7 +440,14 @@ const initialMarketplaceItems = [
 function Marketplace({ t }: { t: TFunction }) {
   const [items, setItems] = useState<any[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newItem, setNewItem] = useState({
+  const [newItem, setNewItem] = useState<{
+    id: number | null;
+    name: string;
+    description: string;
+    price: string;
+    image: string | ArrayBuffer | null;
+    seller: string;
+  }>({
     id: null,
     name: "",
     description: "",

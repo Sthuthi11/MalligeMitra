@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory, FaDollarSign, FaUserCircle, FaImage } from "react-icons/fa";
 import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 
@@ -79,20 +79,23 @@ const TEXT = {
   }
 } as const;
 
-type TFunction = typeof TEXT.en; // Correctly derive the type for 't'
+type TFunction = typeof TEXT.en;
 
 // --- Helper Components for Different Dashboard Sections ---
 
 function SellFlowersForm({ t }: { t: TFunction }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ variety: "Udupi Mallige", quantity: "", price: "" });
-  function handleChange(e) {
+
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  function handleSubmit(e) {
+
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitted(true);
   }
+
   return submitted ? (
     <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200 text-center">
       <h2 className="font-bold text-emerald-700 text-xl mb-4">Listing Submitted!</h2>
@@ -130,13 +133,16 @@ function SellFlowersForm({ t }: { t: TFunction }) {
 function HireLaborers({ t }: { t: TFunction }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ desc: "", date: "", count: "" });
-  function handleChange(e) {
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  function handleSubmit(e) {
+
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitted(true);
   }
+
   return submitted ? (
     <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200 text-center">
       <h2 className="font-bold text-emerald-700 text-xl mb-4">Request Submitted!</h2>
@@ -167,7 +173,7 @@ function HireLaborers({ t }: { t: TFunction }) {
 }
 
 function FarmerForum({ t }: { t: TFunction }) {
-  const [posts, setPosts] = useState<any[]>([]); // Use a more specific type if possible
+  const [posts, setPosts] = useState<any[]>([]);
   const [newQuestion, setNewQuestion] = useState("");
   const [newReply, setNewReply] = useState<Record<number, string>>({});
 
@@ -183,7 +189,7 @@ function FarmerForum({ t }: { t: TFunction }) {
     localStorage.setItem('farmerForumPosts', JSON.stringify(updatedPosts));
   };
 
-  const handlePostQuestion = (e: React.FormEvent) => {
+  const handlePostQuestion = (e: FormEvent) => {
     e.preventDefault();
     if (newQuestion.trim()) {
       const newPost = {
@@ -199,9 +205,10 @@ function FarmerForum({ t }: { t: TFunction }) {
     }
   };
 
-  const handlePostReply = (postId: number) => {
+  const handlePostReply = (postId: number, e: FormEvent) => {
+    e.preventDefault();
     const replyText = newReply[postId];
-    if (replyText.trim()) {
+    if (replyText?.trim()) {
       const updatedPosts = posts.map(post => {
         if (post.id === postId) {
           const newAnswer = {
@@ -269,7 +276,7 @@ function FarmerForum({ t }: { t: TFunction }) {
               )}
             </div>
 
-            <form onSubmit={(e) => { e.preventDefault(); handlePostReply(post.id); }} className="mt-4 pt-4 border-t border-neutral-200 space-y-2">
+            <form onSubmit={(e) => handlePostReply(post.id, e)} className="mt-4 pt-4 border-t border-neutral-200 space-y-2">
               <textarea
                 value={newReply[post.id] || ''}
                 onChange={(e) => setNewReply({ ...newReply, [post.id]: e.target.value })}
@@ -394,7 +401,7 @@ const PriceCalculator = ({ t }: { t: TFunction }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1">Agent Commission</label>
-            <div className="relative">
+              <div className="relative">
               <input type="number" placeholder="10" value={commission} onChange={(e) => setCommission(e.target.value)} className="w-full p-2 pr-7 border border-neutral-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500" />
               <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-500">%</span>
             </div>
@@ -431,7 +438,7 @@ const initialMarketplaceItems = [
 ];
 
 function Marketplace({ t }: { t: TFunction }) {
-  const [items, setItems] = useState<any[]>([]); // Use a more specific type if possible
+  const [items, setItems] = useState<any[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newItem, setNewItem] = useState({
     id: null,
@@ -443,7 +450,6 @@ function Marketplace({ t }: { t: TFunction }) {
   });
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
 
-  // Load items from local storage on component mount
   useEffect(() => {
     const savedItems = localStorage.getItem('marketplaceItems');
     if (savedItems) {
@@ -454,18 +460,17 @@ function Marketplace({ t }: { t: TFunction }) {
     }
   }, []);
 
-  // Save items to local storage whenever the items state changes
   const saveItems = (updatedItems: any[]) => {
     setItems(updatedItems);
     localStorage.setItem('marketplaceItems', JSON.stringify(updatedItems));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewItem({ ...newItem, [name]: value });
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -480,7 +485,7 @@ function Marketplace({ t }: { t: TFunction }) {
     }
   };
 
-  const handleAddItem = (e: React.FormEvent) => {
+  const handleAddItem = (e: FormEvent) => {
     e.preventDefault();
     if (newItem.name && newItem.price && newItem.image) {
       const itemWithId = { ...newItem, id: Date.now() };

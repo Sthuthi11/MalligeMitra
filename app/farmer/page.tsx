@@ -1,11 +1,9 @@
 "use client";
 
-// STEP 1: All imports are now cleaned up and consolidated at the top.
 import React, { useState, useEffect } from "react";
-import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory } from "react-icons/fa";
+import { FaCalculator, FaLeaf, FaUsers, FaBoxOpen, FaStore, FaComments, FaHistory, FaDollarSign, FaUserCircle, FaImage } from "react-icons/fa";
 import GoogleTranslateWidgetBlended from '../../lib/GoogleTranslateWidgetBlended';
 
-// STEP 2: The TEXT object for translations is kept here to be used by the whole page.
 const TEXT = {
   en: {
     dashboard: "Farmer Dashboard",
@@ -24,7 +22,24 @@ const TEXT = {
     marketplaceDesc: "View your orders and explore the virtual marketplace.",
     copyright: "© 2025 MalligeMitra. All rights reserved.",
     built: "Built with ",
-    by: "by Team Regenesis"
+    by: "by Team Regenesis",
+    startDiscussion: "Start a new discussion...",
+    postQuestion: "Post Question",
+    yourReply: "Your Reply...",
+    reply: "Reply",
+    awaitingReplies: "Awaiting replies...",
+    listNewItem: "List a New Item",
+    postListing: "Post Listing",
+    availableItems: "Available Items",
+    buyItem: "Buy Item",
+    yourListing: "Your Listing",
+    listedBy: "Listed by",
+    itemPrice: "Price (₹)",
+    itemName: "Item Name",
+    itemDescription: "Description",
+    uploadImage: "Upload Image",
+    noImage: "No Image",
+    noItems: "No items are currently listed in the marketplace.",
   },
   kn: {
     dashboard: "ರೈತ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
@@ -43,7 +58,24 @@ const TEXT = {
     marketplaceDesc: "ನಿಮ್ಮ ಆರ್ಡರ್‍ಗಳನ್ನು ನೋಡಿ ಮತ್ತು ವರ್ಚುವಲ್ ಮಾರ್ಕೆಟ್ ಅನ್ವೇಷಿಸಿ.",
     copyright: "© 2025 MalligeMitra. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
     built: "ನಿರ್ಮಿಸಲಾಗಿದೆ ",
-    by: "Team Regenesis"
+    by: "Team Regenesis",
+    startDiscussion: "ಹೊಸ ಚರ್ಚೆ ಪ್ರಾರಂಭಿಸಿ...",
+    postQuestion: "ಪ್ರಶ್ನೆ ಪೋಸ್ಟ್ ಮಾಡಿ",
+    yourReply: "ನಿಮ್ಮ ಉತ್ತರ...",
+    reply: "ಪ್ರತ್ಯುತ್ತರ",
+    awaitingReplies: "ಪ್ರತ್ಯುತ್ತರಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...",
+    listNewItem: "ಹೊಸ ವಸ್ತು ಪಟ್ಟಿ ಮಾಡಿ",
+    postListing: "ಪಟ್ಟಿ ಪೋಸ್ಟ್ ಮಾಡಿ",
+    availableItems: "ಲಭ್ಯವಿರುವ ವಸ್ತುಗಳು",
+    buyItem: "ವಸ್ತು ಖರೀದಿಸಿ",
+    yourListing: "ನಿಮ್ಮ ಪಟ್ಟಿ",
+    listedBy: "ಪಟ್ಟಿ ಮಾಡಿದವರು",
+    itemPrice: "ಬೆಲೆ (₹)",
+    itemName: "ವಸ್ತುವಿನ ಹೆಸರು",
+    itemDescription: "ವಿವರಣೆ",
+    uploadImage: "ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    noImage: "ಚಿತ್ರವಿಲ್ಲ",
+    noItems: "ಮಾರ್ಕೆಟ್‍ಪ್ಲೇಸ್‌ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಯಾವುದೇ ವಸ್ತುಗಳು ಪಟ್ಟಿ ಮಾಡಿಲ್ಲ.",
   }
 } as const;
 
@@ -52,13 +84,13 @@ type LangKey = keyof typeof TEXT;
 
 // --- Helper Components for Different Dashboard Sections ---
 
-function SellFlowersForm({ t }: { t: any }) {
+function SellFlowersForm({ t }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ variety: "Udupi Mallige", quantity: "", price: "" });
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e) {
     e.preventDefault();
     setSubmitted(true);
   }
@@ -96,13 +128,13 @@ function SellFlowersForm({ t }: { t: any }) {
   );
 }
 
-function HireLaborers({ t }: { t: any }) {
+function HireLaborers({ t }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ desc: "", date: "", count: "" });
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e) {
     e.preventDefault();
     setSubmitted(true);
   }
@@ -135,41 +167,133 @@ function HireLaborers({ t }: { t: any }) {
   );
 }
 
-function FarmerForum({ t }: { t: any }) {
-  const [posts, setPosts] = useState([
-    { q: "How do you control pests naturally?", a: "I use neem oil spray and intercropping with marigold.", user: "Suresh" },
-    { q: "Best time to harvest Mallige?", a: "Early morning before sunrise gives best fragrance.", user: "Lakshmi" },
-  ]);
-  const [newPost, setNewPost] = useState("");
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (newPost.trim()) {
-      setPosts([{ q: newPost, a: "(Awaiting replies)", user: "You" }, ...posts]);
-      setNewPost("");
+function FarmerForum({ t }) {
+  const [posts, setPosts] = useState([]);
+  const [newQuestion, setNewQuestion] = useState("");
+  const [newReply, setNewReply] = useState({});
+
+  useEffect(() => {
+    const savedPosts = localStorage.getItem('farmerForumPosts');
+    if (savedPosts) {
+      setPosts(JSON.parse(savedPosts));
     }
-  }
+  }, []);
+
+  const savePosts = (updatedPosts) => {
+    setPosts(updatedPosts);
+    localStorage.setItem('farmerForumPosts', JSON.stringify(updatedPosts));
+  };
+
+  const handlePostQuestion = (e) => {
+    e.preventDefault();
+    if (newQuestion.trim()) {
+      const newPost = {
+        id: Date.now(),
+        question: newQuestion.trim(),
+        user: "Farmer (You)",
+        timestamp: new Date().toLocaleString(),
+        answers: [],
+      };
+      const updatedPosts = [newPost, ...posts];
+      savePosts(updatedPosts);
+      setNewQuestion("");
+    }
+  };
+
+  const handlePostReply = (postId) => {
+    const replyText = newReply[postId];
+    if (replyText.trim()) {
+      const updatedPosts = posts.map(post => {
+        if (post.id === postId) {
+          const newAnswer = {
+            id: Date.now(),
+            text: replyText.trim(),
+            user: "Consultant", // Dummy user for replies
+            timestamp: new Date().toLocaleString(),
+          };
+          return { ...post, answers: [...post.answers, newAnswer] };
+        }
+        return post;
+      });
+      savePosts(updatedPosts);
+      setNewReply({ ...newReply, [postId]: '' });
+    }
+  };
+
   return (
-    <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
+    <div className="w-full max-w-2xl bg-white p-8 rounded-xl shadow border border-lime-200">
       <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.forum}</h2>
       <p className="text-neutral-700 text-sm mb-4">{t.forumDesc}</p>
-      <div className="space-y-4">
-        {posts.map((post, i) => (
-          <div key={i} className="bg-lime-50 p-4 rounded border border-lime-200">
-            <p className="font-semibold text-emerald-700">{post.q}</p>
-            <p className="text-neutral-700 text-sm">- {post.user}: {post.a}</p>
+
+      <form onSubmit={handlePostQuestion} className="bg-lime-50 p-4 rounded-lg shadow-inner mb-6">
+        <label htmlFor="newQuestion" className="block text-sm font-medium text-neutral-700 mb-1">
+          {t.startDiscussion}
+        </label>
+        <textarea
+          id="newQuestion"
+          value={newQuestion}
+          onChange={(e) => setNewQuestion(e.target.value)}
+          className="w-full p-2 border border-neutral-300 rounded-md shadow-sm mb-2 focus:ring-emerald-500 focus:border-emerald-500"
+          placeholder="Ask a question or share advice..."
+          required
+        />
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700 transition-colors"
+        >
+          {t.postQuestion}
+        </button>
+      </form>
+
+      <div className="space-y-6">
+        {posts.map((post) => (
+          <div key={post.id} className="bg-lime-100 p-6 rounded-xl shadow-md border border-lime-300">
+            <div className="mb-4">
+              <p className="font-bold text-lg text-emerald-800 break-words">{post.question}</p>
+              <p className="text-xs text-neutral-500 mt-1">
+                Posted by <span className="font-semibold">{post.user}</span> on {post.timestamp}
+              </p>
+            </div>
+
+            <div className="space-y-3 pl-4 border-l-2 border-lime-400">
+              {post.answers.length > 0 ? (
+                post.answers.map((answer) => (
+                  <div key={answer.id} className="bg-white p-3 rounded shadow-sm">
+                    <p className="text-neutral-800 text-sm break-words">{answer.text}</p>
+                    <p className="text-xs text-neutral-500 mt-1">
+                      - Replied by <span className="font-semibold">{answer.user}</span> on {answer.timestamp}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <div className="text-neutral-500 italic text-sm">{t.awaitingReplies}</div>
+              )}
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); handlePostReply(post.id); }} className="mt-4 pt-4 border-t border-neutral-200 space-y-2">
+              <textarea
+                value={newReply[post.id] || ''}
+                onChange={(e) => setNewReply({ ...newReply, [post.id]: e.target.value })}
+                className="w-full p-2 text-sm border border-neutral-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
+                placeholder={t.yourReply}
+                rows={2}
+                required
+              />
+              <button
+                type="submit"
+                className="w-full py-2 px-4 text-sm bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700 transition-colors"
+              >
+                {t.reply}
+              </button>
+            </form>
           </div>
         ))}
-        <form className="pt-4 border-t mt-4" onSubmit={handleSubmit}>
-          <label className="block text-sm font-medium text-neutral-700 mb-1">Start a Discussion</label>
-          <input type="text" value={newPost} onChange={e => setNewPost(e.target.value)} className="w-full p-2 border border-neutral-300 rounded-md shadow-sm mb-2" placeholder="Ask a question or share advice..." required />
-          <button type="submit" className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700">Post</button>
-        </form>
       </div>
     </div>
   );
 }
 
-function HistoricalPrices({ t }: { t: any }) {
+function HistoricalPrices({ t }) {
   const prices = [
     { date: "2025-08-01", variety: "Udupi Mallige", price: 1200 },
     { date: "2025-07-28", variety: "Mangaluru Mallige", price: 1100 },
@@ -201,7 +325,7 @@ function HistoricalPrices({ t }: { t: any }) {
   );
 }
 
-const PriceCalculator = ({ t }: { t: any }) => {
+const PriceCalculator = ({ t }) => {
   const [variety, setVariety] = useState("Udupi Mallige");
   const [atte, setAtte] = useState("");
   const [chendu, setChendu] = useState("");
@@ -271,7 +395,7 @@ const PriceCalculator = ({ t }: { t: any }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1">Agent Commission</label>
-             <div className="relative">
+              <div className="relative">
               <input type="number" placeholder="10" value={commission} onChange={(e) => setCommission(e.target.value)} className="w-full p-2 pr-7 border border-neutral-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500" />
               <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-500">%</span>
             </div>
@@ -300,12 +424,224 @@ const PriceCalculator = ({ t }: { t: any }) => {
   );
 };
 
+// ---Marketplace Component with Listing and Buying functionality ---
+const currentUser = "Anita";
+const initialMarketplaceItems = [
+  { id: 1, name: "Jasmine Flowers (1kg)", description: "Freshly picked flowers, perfect for bouquets and ceremonies.", price: 2500, image: "https://t3.ftcdn.net/jpg/04/00/40/25/360_F_400402540_r8fS61YtE0T4vK8mR711fR00A7D40XfL.jpg", seller: "A" },
+  { id: 2, name: "Jasmine Thread (1 roll)", description: "Strong and biodegradable thread for stringing flowers.", price: 200, image: "https://5.imimg.com/data5/SELLER/Default/2021/7/CK/CL/AY/131065715/mallige-thread-500x500.jpg", seller: "Rajesh" },
+];
 
-// This is your main FarmerDashboard component
+function Marketplace({ t }) {
+  const [items, setItems] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newItem, setNewItem] = useState({
+    id: null,
+    name: "",
+    description: "",
+    price: "",
+    image: null,
+    seller: currentUser,
+  });
+  const [imagePreview, setImagePreview] = useState(null);
+
+  // Load items from local storage on component mount
+  useEffect(() => {
+    const savedItems = localStorage.getItem('marketplaceItems');
+    if (savedItems) {
+      setItems(JSON.parse(savedItems));
+    } else {
+      setItems(initialMarketplaceItems);
+      localStorage.setItem('marketplaceItems', JSON.stringify(initialMarketplaceItems));
+    }
+  }, []);
+
+  // Save items to local storage whenever the items state changes
+  const saveItems = (updatedItems) => {
+    setItems(updatedItems);
+    localStorage.setItem('marketplaceItems', JSON.stringify(updatedItems));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewItem({ ...newItem, [name]: value });
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setNewItem({ ...newItem, image: reader.result });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+      setNewItem({ ...newItem, image: null });
+    }
+  };
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    if (newItem.name && newItem.price && newItem.image) {
+      const itemWithId = { ...newItem, id: Date.now() };
+      const updatedItems = [itemWithId, ...items];
+      saveItems(updatedItems);
+      setNewItem({
+        id: null,
+        name: "",
+        description: "",
+        price: "",
+        image: null,
+        seller: currentUser,
+      });
+      setImagePreview(null);
+      setShowAddForm(false);
+    }
+  };
+
+  const handleBuyItem = (itemId) => {
+    const updatedItems = items.filter(item => item.id !== itemId);
+    saveItems(updatedItems);
+    alert("Item purchased successfully!");
+  };
+
+  return (
+    <div className="w-full max-w-4xl bg-white p-8 rounded-xl shadow border border-lime-200">
+      <div className="flex justify-between items-center mb-6 border-b pb-4">
+        <div>
+          <h2 className="font-bold text-emerald-700 text-3xl flex items-center gap-2">
+            <FaStore /> {t.marketplace}
+          </h2>
+          <p className="text-neutral-700 text-sm mt-1">{t.marketplaceDesc}</p>
+        </div>
+        <button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="bg-emerald-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-emerald-700 transition-colors"
+        >
+          {showAddForm ? "Cancel" : t.listNewItem}
+        </button>
+      </div>
+
+      {showAddForm && (
+        <div className="mb-8 p-6 bg-lime-50 rounded-lg border border-lime-200">
+          <h3 className="font-semibold text-emerald-700 text-xl mb-4">{t.listNewItem}</h3>
+          <form onSubmit={handleAddItem} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-1">{t.itemName}</label>
+              <input
+                type="text"
+                name="name"
+                value={newItem.name}
+                onChange={handleChange}
+                className="w-full p-2 border border-neutral-300 rounded-md"
+                placeholder="e.g., Fresh Jasmine Flowers (10 Atte)"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-1">{t.itemDescription}</label>
+              <textarea
+                name="description"
+                value={newItem.description}
+                onChange={handleChange}
+                className="w-full p-2 border border-neutral-300 rounded-md"
+                rows="3"
+                placeholder="Provide a detailed description of your item..."
+              ></textarea>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-1">{t.itemPrice}</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={newItem.price}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-neutral-300 rounded-md"
+                  placeholder="e.g., 1500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-1">{t.uploadImage}</label>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                  onChange={handleImageUpload}
+                  className="w-full text-sm text-neutral-700
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-emerald-50 file:text-emerald-700
+                    hover:file:bg-emerald-100"
+                  required
+                />
+                {imagePreview && (
+                  <div className="mt-4">
+                    <img src={imagePreview} alt="Image Preview" className="h-24 w-24 object-cover rounded-md border border-neutral-300" />
+                  </div>
+                )}
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!newItem.name || !newItem.price || !newItem.image}
+            >
+              {t.postListing}
+            </button>
+          </form>
+        </div>
+      )}
+
+      <h3 className="font-semibold text-emerald-700 text-2xl mb-4">{t.availableItems}</h3>
+      {items.length === 0 ? (
+        <div className="text-center text-neutral-500 italic py-10">{t.noItems}</div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {items.map((item) => (
+            <div key={item.id} className="bg-lime-50 rounded-xl shadow-md overflow-hidden flex flex-col justify-between border border-lime-300">
+              <div className="relative h-48 w-full bg-neutral-200">
+                {item.image ? (
+                  <img src={item.image} alt={item.name} className="object-cover w-full h-full" />
+                ) : (
+                  <div className="flex flex-col items-center justify-center w-full h-full text-neutral-400">
+                      <FaImage className="text-5xl" />
+                      <span className="ml-2 mt-2">{t.noImage}</span>
+                  </div>
+                )}
+              </div>
+              <div className="p-4 flex-grow">
+                <h4 className="font-bold text-lg text-emerald-800 mb-1">{item.name}</h4>
+                <p className="text-neutral-600 text-sm mb-2 line-clamp-2">{item.description || "No description provided."}</p>
+                <div className="flex items-center text-lg font-bold text-emerald-600 mb-2">
+                  <span className="text-sm mr-1">₹</span>
+                  <span>{item.price}</span>
+                </div>
+              </div>
+              <div className="p-4 border-t border-lime-200 flex flex-col gap-2">
+                <button
+                  onClick={() => handleBuyItem(item.id)}
+                  className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={item.seller === currentUser}
+                >
+                  {item.seller === currentUser ? t.yourListing : t.buyItem}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// The main dashboard component that brings everything together
 export default function FarmerDashboard() {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [active, setActive] = useState("priceCalculator");
-  // Use English text for nav and content, Google Translate widget will handle translation
+  const [active, setActive] = useState("marketplace");
   const t = TEXT["en"];
 
   const navItems = [
@@ -324,7 +660,6 @@ export default function FarmerDashboard() {
         {navItems.map(item => (
           <button
             key={item.key}
-            // STEP 4: Fixed className syntax error
             className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-200 hover:bg-lime-600 focus:outline-none ${active === item.key ? "bg-lime-400 text-emerald-900" : ""}`}
             onClick={() => setActive(item.key)}
             aria-label={item.label}
@@ -340,7 +675,6 @@ export default function FarmerDashboard() {
           <div className="flex items-center gap-4">
             <img src="/farmerimg.jpg" alt="Farmer" className="h-14 w-14 object-cover rounded-full shadow border-4 border-lime-200" />
             <div>
-              {/* STEP 3: Re-integrated the 't' object for translation */}
               <h1 className="font-extrabold text-emerald-800 text-2xl md:text-3xl drop-shadow-lg">{t.welcome}</h1>
               <span className="font-bold text-base text-emerald-700">MalligeMitra</span>
             </div>
@@ -377,11 +711,7 @@ export default function FarmerDashboard() {
               <HireLaborers t={t} />
             )}
             {active === "marketplace" && (
-              <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow border border-lime-200">
-                <h2 className="font-bold text-emerald-700 text-xl mb-4">{t.marketplace}</h2>
-                <p className="text-neutral-700 text-sm mb-4">{t.marketplaceDesc}</p>
-                <div className="text-center text-neutral-400">[Marketplace Coming Soon]</div>
-              </div>
+              <Marketplace t={t} />
             )}
             {active === "forum" && (
               <FarmerForum t={t} />

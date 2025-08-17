@@ -433,8 +433,8 @@ const PriceCalculator = ({ t }: { t: TFunction }) => {
 // ---Marketplace Component with Listing and Buying functionality ---
 const currentUser = "Anita";
 const initialMarketplaceItems = [
-  { id: 1, name: "Jasmine Flowers (1kg)", description: "Freshly picked flowers, perfect for bouquets and ceremonies.", price: 2500, image: "https://t3.ftcdn.net/jpg/04/00/40/25/360_F_400402540_r8fS61YtE0T4vK8mR711fR00A7D40XfL.jpg", seller: "A" },
-  { id: 2, name: "Jasmine Thread (1 roll)", description: "Strong and biodegradable thread for stringing flowers.", price: 200, image: "https://5.imimg.com/data5/SELLER/Default/2021/7/CK/CL/AY/131065715/mallige-thread-500x500.jpg", seller: "Rajesh" },
+  { id: 1, name: "Jasmine Flowers (1kg)", description: "Freshly picked flowers, perfect for bouquets and ceremonies.", price: 2500, image: "/mallige.jpeg", seller: "A" },
+  { id: 2, name: "Jasmine Thread (1 roll)", description: "Strong and biodegradable thread for stringing flowers.", price: 200, image: "/thread.jpeg", seller: "Rajesh" },
 ];
 
 function Marketplace({ t }: { t: TFunction }) {

@@ -1,6 +1,6 @@
 # MalligeMitra - Empowering Udupi Mallige(Jasmine) Farmers
 
-This is a **simple prototype** with a **role-based platform** to support jasmine farmers and related stakeholders.  
+This is a **simple prototype** of a **role-based platform** to support jasmine farmers and related stakeholders.  
 
 ## User Roles:
 
